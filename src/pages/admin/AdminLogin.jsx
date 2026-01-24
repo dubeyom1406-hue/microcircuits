@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -87,11 +88,13 @@ const AdminLogin = () => {
                     </div>
 
                     {error && (
-                        <p
+                        <motion.p
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
                             style={{ color: '#ff4b4b', fontSize: '0.85rem', textAlign: 'center', margin: '0' }}
                         >
                             {error}
-                        </p>
+                        </motion.p>
                     )}
 
                     <button

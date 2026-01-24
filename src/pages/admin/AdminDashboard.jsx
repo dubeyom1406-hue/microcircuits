@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, FileText, LogOut, Layout, User, Bell } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
@@ -45,7 +46,7 @@ const AdminDashboard = () => {
                     Dashboard Overview
                 </h1>
                 <p style={{ color: '#666', fontSize: '1.1rem' }}>
-                    Welcome back, {user?.displayName || user?.email?.split('@')[0] || 'Administrator'}. Here's what's happening with MIPL content.
+                    Welcome back, {user?.username || 'Administrator'}. Here's what's happening with MIPL content.
                 </p>
             </div>
 
@@ -57,8 +58,9 @@ const AdminDashboard = () => {
                 marginBottom: '3rem'
             }}>
                 {stats.map((stat, i) => (
-                    <div
+                    <motion.div
                         key={i}
+                        whileHover={{ y: -5 }}
                         onClick={() => navigate(stat.path)}
                         style={{
                             background: 'rgba(15, 15, 15, 0.4)',
@@ -66,8 +68,7 @@ const AdminDashboard = () => {
                             borderRadius: '24px',
                             padding: '2rem',
                             position: 'relative',
-                            overflow: 'hidden',
-                            cursor: 'pointer'
+                            overflow: 'hidden'
                         }}
                     >
                         <div style={{
@@ -89,7 +90,7 @@ const AdminDashboard = () => {
                             <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: stat.color }}></div>
                             {stat.trend}
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
 

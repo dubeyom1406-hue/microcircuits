@@ -38,7 +38,6 @@ export const AdminProvider = ({ children }) => {
 
     // Auth Listener
     useEffect(() => {
-        console.log("AdminContext: Initializing Auth Listener...");
         if (!auth) {
             console.error("Firebase auth not initialized in AdminContext. Check Vercel Env Vars.");
             setLoading(false);
@@ -46,24 +45,22 @@ export const AdminProvider = ({ children }) => {
         }
 
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            console.log("AdminContext: Auth state changed:", currentUser ? `Logged In (${currentUser.email})` : "Not Logged In");
+            console.log("Auth state changed:", currentUser ? "Logged In" : "Not Logged In");
             setUser(currentUser);
             setIsAdmin(!!currentUser);
             setLoading(false);
-            console.log("AdminContext: loading set to false");
         }, (error) => {
-            console.error("AdminContext: Auth state error:", error);
+            console.error("Auth state error:", error);
             setLoading(false);
         });
 
-        // Failsafe: if nothing happens in 4 seconds, stop loading
+        // Failsafe: if nothing happens in 6 seconds, stop loading
         const timer = setTimeout(() => {
-            console.warn("AdminContext: Auth check timed out (4s). Forcing loading off.");
+            console.warn("Auth check timed out. Forcing loading off.");
             setLoading(false);
-        }, 4000);
+        }, 6000);
 
         return () => {
-            console.log("AdminContext: Cleaning up Auth Listener...");
             unsubscribe();
             clearTimeout(timer);
         };

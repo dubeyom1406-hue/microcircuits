@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Trash2, Search, Plus, ExternalLink } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 import { useNavigate } from 'react-router-dom';
 
-// Admin Panel v4.5.2 (Static UI)
 const ManageCaseStudies = () => {
     const { caseStudies, deleteCaseStudy } = useAdmin();
     const [searchTerm, setSearchTerm] = useState('');
@@ -73,8 +73,9 @@ const ManageCaseStudies = () => {
                 gap: '1.5rem'
             }}>
                 {filteredStudies.map((study) => (
-                    <div
+                    <motion.div
                         key={study.id || study._id}
+                        layout
                         style={{
                             background: 'rgba(255, 255, 255, 0.02)',
                             border: '1px solid rgba(255, 255, 255, 0.05)',
@@ -141,7 +142,7 @@ const ManageCaseStudies = () => {
                                 <Trash2 size={16} />
                             </button>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </div>

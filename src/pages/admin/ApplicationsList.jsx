@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Mail, Briefcase, Calendar, Trash2, Search, Download } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -53,8 +54,10 @@ const ApplicationsList = () => {
                     </div>
                 ) : (
                     filteredApps.map((app) => (
-                        <div
+                        <motion.div
                             key={app.id || app._id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
                             style={{
                                 background: 'rgba(255, 255, 255, 0.02)',
                                 border: '1px solid rgba(255, 255, 255, 0.05)',
@@ -96,7 +99,7 @@ const ApplicationsList = () => {
                                     <Trash2 size={16} />
                                 </button>
                             </div>
-                        </div>
+                        </motion.div>
                     ))
                 )}
             </div>

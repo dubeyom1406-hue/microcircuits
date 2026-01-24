@@ -46,18 +46,19 @@ const InitialLoaderManager = () => {
 const AppContent = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [globalLoading, setGlobalLoading] = React.useState(!location.pathname.startsWith('/admin'));
+    const isPathAdmin = location.pathname.startsWith('/admin');
+    const [globalLoading, setGlobalLoading] = React.useState(!isPathAdmin);
 
     React.useEffect(() => {
-        if (location.pathname.startsWith('/admin')) {
+        if (isPathAdmin) {
             setGlobalLoading(false);
         }
-    }, [location.pathname]);
+    }, [isPathAdmin]);
 
     return (
         <div className="App">
             <AnimatePresence>
-                {globalLoading && (
+                {(!isPathAdmin && globalLoading) && (
                     <IntroLoader
                         key="intro-loader-global"
                         onComplete={() => {

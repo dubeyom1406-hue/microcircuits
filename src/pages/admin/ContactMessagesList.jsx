@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Mail, MessageSquare, Calendar, Trash2, Search, User, UserCheck } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -54,8 +55,10 @@ const ContactMessagesList = () => {
                     </div>
                 ) : (
                     filteredMessages.map((msg) => (
-                        <div
+                        <motion.div
                             key={msg.id || msg._id}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
                             style={{
                                 background: 'rgba(255, 255, 255, 0.02)',
                                 border: '1px solid rgba(255, 255, 255, 0.05)',
@@ -144,7 +147,7 @@ const ContactMessagesList = () => {
                                     Reply via Email
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))
                 )}
             </div>

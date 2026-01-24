@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Edit2, Trash2, Search, Plus, X } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 import { useNavigate } from 'react-router-dom';
@@ -98,8 +99,9 @@ const ManageVacancies = () => {
 
             <div style={{ display: 'grid', gap: '1rem' }}>
                 {filteredVacancies.map((vacancy) => (
-                    <div
+                    <motion.div
                         key={vacancy.id || vacancy._id}
+                        layout
                         className="vacancy-item"
                         style={{
                             background: 'rgba(255, 255, 255, 0.02)',
@@ -133,79 +135,91 @@ const ManageVacancies = () => {
                                 <Trash2 size={18} />
                             </button>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
 
             {/* Edit Modal */}
-            {editingVacancy && (
-                <div style={modalOverlayStyle}>
-                    <div style={modalContentStyle}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                            <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Edit Vacancy</h2>
-                            <button onClick={() => setEditingVacancy(null)} style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer' }}>
-                                <X size={24} />
-                            </button>
-                        </div>
+            <AnimatePresence>
+                {editingVacancy && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={modalOverlayStyle}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            style={modalContentStyle}
+                        >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                                <h2 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Edit Vacancy</h2>
+                                <button onClick={() => setEditingVacancy(null)} style={{ background: 'none', border: 'none', color: '#666', cursor: 'pointer' }}>
+                                    <X size={24} />
+                                </button>
+                            </div>
 
-                        <form onSubmit={handleEditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                            <div style={inputGroupStyle}>
-                                <label style={labelStyle}>Title</label>
-                                <input
-                                    type="text"
-                                    value={editingVacancy.title}
-                                    onChange={(e) => setEditingVacancy({ ...editingVacancy, title: e.target.value })}
-                                    style={inputStyle}
-                                />
-                            </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                            <form onSubmit={handleEditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                                 <div style={inputGroupStyle}>
-                                    <label style={labelStyle}>Experience</label>
+                                    <label style={labelStyle}>Title</label>
                                     <input
                                         type="text"
-                                        value={editingVacancy.exp}
-                                        onChange={(e) => setEditingVacancy({ ...editingVacancy, exp: e.target.value })}
+                                        value={editingVacancy.title}
+                                        onChange={(e) => setEditingVacancy({ ...editingVacancy, title: e.target.value })}
                                         style={inputStyle}
                                     />
                                 </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                    <div style={inputGroupStyle}>
+                                        <label style={labelStyle}>Experience</label>
+                                        <input
+                                            type="text"
+                                            value={editingVacancy.exp}
+                                            onChange={(e) => setEditingVacancy({ ...editingVacancy, exp: e.target.value })}
+                                            style={inputStyle}
+                                        />
+                                    </div>
+                                    <div style={inputGroupStyle}>
+                                        <label style={labelStyle}>Location</label>
+                                        <input
+                                            type="text"
+                                            value={editingVacancy.location}
+                                            onChange={(e) => setEditingVacancy({ ...editingVacancy, location: e.target.value })}
+                                            style={inputStyle}
+                                        />
+                                    </div>
+                                </div>
                                 <div style={inputGroupStyle}>
-                                    <label style={labelStyle}>Location</label>
-                                    <input
-                                        type="text"
-                                        value={editingVacancy.location}
-                                        onChange={(e) => setEditingVacancy({ ...editingVacancy, location: e.target.value })}
+                                    <label style={labelStyle}>Description</label>
+                                    <textarea
+                                        rows={5}
+                                        value={editingVacancy.description}
+                                        onChange={(e) => setEditingVacancy({ ...editingVacancy, description: e.target.value })}
                                         style={inputStyle}
                                     />
                                 </div>
-                            </div>
-                            <div style={inputGroupStyle}>
-                                <label style={labelStyle}>Description</label>
-                                <textarea
-                                    rows={5}
-                                    value={editingVacancy.description}
-                                    onChange={(e) => setEditingVacancy({ ...editingVacancy, description: e.target.value })}
-                                    style={inputStyle}
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                style={{
-                                    padding: '1rem',
-                                    background: '#00c2ff',
-                                    border: 'none',
-                                    borderRadius: '12px',
-                                    color: '#000',
-                                    fontWeight: 700,
-                                    marginTop: '1rem',
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                Save Changes
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            )}
+                                <button
+                                    type="submit"
+                                    style={{
+                                        padding: '1rem',
+                                        background: '#00c2ff',
+                                        border: 'none',
+                                        borderRadius: '12px',
+                                        color: '#000',
+                                        fontWeight: 700,
+                                        marginTop: '1rem',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    Save Changes
+                                </button>
+                            </form>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

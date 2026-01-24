@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Save } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
@@ -103,7 +104,9 @@ const AddCaseStudy = () => {
                 </div>
 
                 {message.text && (
-                    <div
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
                         style={{
                             padding: '1rem',
                             borderRadius: '12px',
@@ -115,7 +118,7 @@ const AddCaseStudy = () => {
                         }}
                     >
                         {message.text}
-                    </div>
+                    </motion.div>
                 )}
 
                 <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
@@ -178,6 +181,5 @@ const inputStyle = {
     width: '100%',
     fontFamily: 'inherit'
 };
-
 
 export default AddCaseStudy;

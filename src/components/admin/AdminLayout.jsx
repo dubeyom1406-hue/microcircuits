@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -68,8 +69,7 @@ const AdminLayout = ({ children }) => {
                     left: 0,
                     zIndex: 1000,
                     overflow: 'hidden',
-                    boxShadow: isMobile && isSidebarOpen ? '0 0 50px rgba(0,0,0,0.5)' : 'none',
-                    transition: 'width 0.3s ease'
+                    boxShadow: isMobile && isSidebarOpen ? '0 0 50px rgba(0,0,0,0.5)' : 'none'
                 }}
             >
                 {/* Logo Section */}
@@ -152,8 +152,8 @@ const AdminLayout = ({ children }) => {
                         </div>
                         {isSidebarOpen && (
                             <div style={{ overflow: 'hidden' }}>
-                                <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>{user?.displayName || user?.email?.split('@')[0] || 'Admin'}</p>
-                                <p style={{ margin: 0, fontSize: '0.7rem', color: '#666' }}>{user?.email || 'System Administrator'}</p>
+                                <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>{user?.username || 'Admin'}</p>
+                                <p style={{ margin: 0, fontSize: '0.7rem', color: '#666' }}>System Administrator</p>
                             </div>
                         )}
                     </div>
@@ -248,7 +248,9 @@ const AdminLayout = ({ children }) => {
                     </div>
                 </div>
 
-                <div>
+                <div
+                    style={{ opacity: 1 }}
+                >
                     {children}
                 </div>
             </main>
