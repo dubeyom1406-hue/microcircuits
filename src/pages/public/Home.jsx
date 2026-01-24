@@ -97,17 +97,29 @@ const Home = () => {
                         </motion.div>
 
 
-                        {/* Brand Text Animation: Center to Top-Right */}
-                        {phase >= 2 && (
+                        {/* Brand Text Animation: Center to Top-Right (Mirrors Logo) */}
+                        {phase >= 0 && (
                             <motion.div
-                                initial={{ top: "50%", right: "50%", x: "50%", y: "-50%", scale: 1 }}
-                                animate={
-                                    phase >= 3
-                                        ? { top: isMobile ? "2rem" : "3rem", right: isMobile ? "2rem" : "3rem", x: "0%", y: "0%", scale: isMobile ? 0.3 : 0.25 }
-                                        : { top: "50%", right: "50%", x: "50%", y: "-50%", scale: 1 }
-                                }
-                                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                                style={{ position: 'absolute', zIndex: 110, display: 'flex', flexDirection: 'column', alignItems: 'center', pointerEvents: 'none', transformOrigin: 'top right' }}
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{
+                                    opacity: phase >= 0 ? 1 : 0,
+                                    scale: phase >= 1 ? (isMobile ? 0.3 : 0.25) : (phase >= 0 ? 1 : 0),
+                                    x: phase >= 1 ? (isMobile ? '35vw' : '42vw') : 0, // Moves Right
+                                    y: phase >= 1 ? (isMobile ? '-44vh' : '-44vh') : 0, // Moves Up
+                                }}
+                                transition={{
+                                    scale: {
+                                        type: "spring",
+                                        stiffness: 100,
+                                        damping: 15,
+                                        duration: 1.5
+                                    },
+                                    x: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
+                                    y: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
+                                    opacity: { duration: 0.5 }
+                                }}
+                                style={{ position: 'absolute', zIndex: 110 }}
+                                className="flex flex-col items-center justify-center pointer-events-none"
                             >
                                 <h1 className="text-4xl md:text-7xl font-bold text-white tracking-tight leading-none mb-1 md:mb-4">MicroCircuits</h1>
                                 <h1 className="text-2xl md:text-5xl font-bold text-[#b0bebe] tracking-tight leading-none">Innovations</h1>
