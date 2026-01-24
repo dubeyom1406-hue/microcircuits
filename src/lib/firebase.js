@@ -12,13 +12,26 @@ const firebaseConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-if (!firebaseConfig.apiKey) {
-    console.error("Firebase API Key is missing! Make sure your .env.local file is loaded and the server is restarted.");
+// Initialize Firebase
+let app;
+let auth;
+let db;
+
+try {
+    if (!firebaseConfig.apiKey) {
+        console.warn("Firebase: API Key missing. Check .env.local or Vercel Environment Variables.");
+        // We continue, but expect auth/db to fail if used.
+    }
+
+    console.log("Initializing Firebase...");
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    console.log("Firebase initialized successfully");
+} catch (error) {
+    console.error("Firebase Initialization Failed:", error.message);
+    // Proceed with undefined auth/db, allowing the UI to render what it can.
 }
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-
+export { auth, db };
 export default app;

@@ -26,6 +26,10 @@ export const AdminProvider = ({ children }) => {
 
     // Auth Listener
     useEffect(() => {
+        if (!auth) {
+            console.error("Firebase auth not initialized in AdminContext");
+            return;
+        }
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
             setIsAdmin(!!currentUser);
@@ -84,6 +88,10 @@ export const AdminProvider = ({ children }) => {
     // Usage: Fetch all data on mount (no need to wait for login for public data)
     useEffect(() => {
         const fetchPublicData = async () => {
+            if (!db) {
+                console.warn("Firebase DB not initialized, skipping public data fetch");
+                return;
+            }
             // startLoading(); // Optional: trigger global loader
             try {
                 const vacanciesSnap = await getDocs(collection(db, 'vacancies'));

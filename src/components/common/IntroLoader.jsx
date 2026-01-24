@@ -7,29 +7,37 @@ const IntroLoader = ({ onComplete }) => {
     const [subPhase, setSubPhase] = useState(0);
     const [blueFill, setBlueFill] = useState(false);
     const [yellowFill, setYellowFill] = useState(false);
+    const [imgError, setImgError] = useState(false);
 
     useEffect(() => {
         const timers = [
-            setTimeout(() => setPhase(0), 3000), // Start Logo Bloom after preloader
-            setTimeout(() => setPhase(1), 5000), // Move logo to corner
-            setTimeout(() => setPhase(2), 7000), // Show MIPL text
-            setTimeout(() => setPhase(3), 10000), // Start Design. Great. Engineering.
-            setTimeout(() => setSubPhase(1), 11000), // "Great."
-            setTimeout(() => setSubPhase(2), 12000), // "Engineering"
-            setTimeout(() => setYellowFill(true), 12500), // Slogan fill
-            setTimeout(() => setPhase(4), 16000), // Design. Develop. Deliver.
-            setTimeout(() => setSubPhase(3), 17500), // Develop.
-            setTimeout(() => setSubPhase(4), 19000), // Deliver.
-            setTimeout(() => setSubPhase(5), 20500), // Slogan
-            setTimeout(() => setBlueFill(true), 21500), // Slogan fill
+            setTimeout(() => setPhase(0), 500),  // Start Logo Bloom almost immediately
+            setTimeout(() => setPhase(1), 2500), // Move logo to corner
+            setTimeout(() => setPhase(2), 4500), // Show MIPL text
+            setTimeout(() => setPhase(3), 8500), // Start Design. Great. Engineering.
+            setTimeout(() => setSubPhase(1), 9500),
+            setTimeout(() => setSubPhase(2), 10500),
+            setTimeout(() => setYellowFill(true), 11000),
+            setTimeout(() => setPhase(4), 14500),
+            setTimeout(() => setSubPhase(3), 16000),
+            setTimeout(() => setSubPhase(4), 17500),
+            setTimeout(() => setSubPhase(5), 19000),
+            setTimeout(() => setBlueFill(true), 20000),
             setTimeout(() => {
                 setPhase(5);
                 if (onComplete) onComplete();
-            }, 24000)
+            }, 23500),
+            // Safety Failsafe: Force complete if something gets stuck
+            setTimeout(() => {
+                if (phase < 5) {
+                    console.warn("IntroLoader safety timer triggered. Forcing navigation.");
+                    if (onComplete) onComplete();
+                }
+            }, 25000)
         ];
 
         return () => timers.forEach(clearTimeout);
-    }, [onComplete]);
+    }, [onComplete, phase]);
 
     return (
         <motion.div
@@ -73,22 +81,28 @@ const IntroLoader = ({ onComplete }) => {
                                 y: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
                                 opacity: { duration: 0.5 }
                             }}
-                            style={{ position: 'absolute', zIndex: 100 }}
+                            style={{ position: 'absolute', zIndex: 50 }}
                             className="flex items-center justify-center"
                         >
-                            <img
-                                src="/logo_large.png"
-                                alt="MIPL Logo"
-                                style={{
-                                    width: '650px',
-                                    height: 'auto',
-                                    filter: 'drop-shadow(0 0 60px rgba(0, 194, 255, 0.6))'
-                                }}
-                            />
+                            {!imgError ? (
+                                <img
+                                    src="/logo_large.png"
+                                    alt="MIPL Logo"
+                                    onError={() => setImgError(true)}
+                                    style={{
+                                        width: '650px',
+                                        height: 'auto',
+                                        filter: 'drop-shadow(0 0 60px rgba(0, 194, 255, 0.6))'
+                                    }}
+                                />
+                            ) : (
+                                // Fallback if image fails to load
+                                <h1 className="text-4xl font-bold text-white tracking-wider">MIPL</h1>
+                            )}
                         </motion.div>
 
                         {/* Absolute Centered Text Container */}
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[100]">
                             <AnimatePresence mode="wait">
                                 {/* Phase 2: MIPL Text */}
                                 {phase === 2 && (

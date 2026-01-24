@@ -18,6 +18,9 @@ const InfiniteLogoPreloader = () => {
         }
     }, [isLoading]);
 
+    // EMERGENCY: Disable loader
+    return null;
+
     if (!shouldRender) return null;
 
     return (

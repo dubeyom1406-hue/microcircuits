@@ -124,9 +124,6 @@ const Navbar = () => {
 
             {/* Right Column: Branding Text / Mobile Toggle */}
             <div style={{ justifySelf: 'end', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                {!isMobile && (
-                    {/* Branding Text Removed per user request */ }
-                )}
 
                 {isMobile && (
                     <button

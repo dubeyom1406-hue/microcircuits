@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import Navbar from './components/navigation/Navbar';
 import Home from './pages/public/Home';
 import Expertise from './pages/public/Expertise';
@@ -140,15 +141,17 @@ const AppContent = () => {
 function App() {
     return (
         <Router>
-            <LoadingProvider>
-                <AdminProvider>
-                    <div>
-                        {/* <InitialLoaderManager /> */}
-                        <CustomCursor />
-                        <AppContent />
-                    </div>
-                </AdminProvider>
-            </LoadingProvider>
+            <ErrorBoundary>
+                <LoadingProvider>
+                    <AdminProvider>
+                        <div>
+                            {/* <InitialLoaderManager /> */}
+                            <CustomCursor />
+                            <AppContent />
+                        </div>
+                    </AdminProvider>
+                </LoadingProvider>
+            </ErrorBoundary>
         </Router>
     );
 }
