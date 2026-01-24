@@ -25,11 +25,22 @@ export const AdminProvider = ({ children }) => {
     const [user, setUser] = useState(null); // Add user state
     const { startLoading, stopLoading } = useLoading();
 
+    const [loading, setLoading] = useState(true);
+
+    // Diagnostic Check
+    useEffect(() => {
+        console.log("FIREBASE_ENV_CHECK:", {
+            hasApiKey: !!import.meta.env.VITE_FIREBASE_API_KEY,
+            hasAuthDomain: !!import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+            projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID
+        });
+    }, []);
+
     // Auth Listener
     useEffect(() => {
         if (!auth) {
             console.error("Firebase auth not initialized in AdminContext. Check Vercel Env Vars.");
-            setLoading(false); // Don't block the UI if Firebase fails
+            setLoading(false);
             return;
         }
 
@@ -43,16 +54,22 @@ export const AdminProvider = ({ children }) => {
             setLoading(false);
         });
 
-        // Failsafe: if nothing happens in 5 seconds, stop loading
+        // Failsafe: if nothing happens in 6 seconds, stop loading
         const timer = setTimeout(() => {
+            console.warn("Auth check timed out. Forcing loading off.");
             setLoading(false);
-        }, 5000);
+        }, 6000);
 
         return () => {
             unsubscribe();
             clearTimeout(timer);
         };
     }, []);
+
+    const dismissLoading = () => {
+        console.log("Manual loading dismissal triggered");
+        setLoading(false);
+    };
 
     const [vacancies, setVacancies] = useState([]);
     const [caseStudies, setCaseStudies] = useState([]);
@@ -77,8 +94,6 @@ export const AdminProvider = ({ children }) => {
             titleSize: '4rem'
         }
     });
-    const [loading, setLoading] = useState(true);
-
     // Initial load for layout settings
     useEffect(() => {
         const savedLayout = localStorage.getItem('miplLayoutSettings');
@@ -278,7 +293,7 @@ export const AdminProvider = ({ children }) => {
 
     return (
         <AdminContext.Provider value={{
-            user, isAdmin, loginAdmin, logoutAdmin, registerAdmin,
+            user, isAdmin, loginAdmin, logoutAdmin, registerAdmin, dismissLoading,
             vacancies, addVacancy, updateVacancy, deleteVacancy,
             caseStudies, addCaseStudy, updateCaseStudy, deleteCaseStudy,
             applications, addApplication, deleteApplication,
