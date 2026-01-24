@@ -2,12 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, FileText, LogOut, Layout, User, Bell } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
 import { useAdmin } from '../../context/AdminContext';
 
 const AdminDashboard = () => {
-    const { user } = useAuth();
-    const { vacancies, caseStudies, applications, contactMessages } = useAdmin();
+    const { user, vacancies, caseStudies, applications, contactMessages } = useAdmin();
     const navigate = useNavigate();
 
     const stats = [

@@ -13,10 +13,10 @@ import {
     ChevronRight,
     Settings
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAdmin } from '../../context/AdminContext';
 
 const AdminLayout = ({ children }) => {
-    const { logout, user } = useAuth();
+    const { logoutAdmin: logout, user } = useAdmin();
     const navigate = useNavigate();
     const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);

@@ -8,7 +8,6 @@ import CaseStudy from './pages/public/CaseStudy';
 import Contact from './pages/public/Contact';
 import About from './pages/public/About';
 import { AnimatePresence } from 'framer-motion';
-import { AuthProvider } from './context/AuthContext';
 import { AdminProvider } from './context/AdminContext';
 import './index.css';
 import './App.css';
@@ -141,17 +140,15 @@ const AppContent = () => {
 function App() {
     return (
         <Router>
-            <AuthProvider>
-                <LoadingProvider>
-                    <AdminProvider>
-                        <div>
-                            {/* <InitialLoaderManager /> */}
-                            <CustomCursor />
-                            <AppContent />
-                        </div>
-                    </AdminProvider>
-                </LoadingProvider>
-            </AuthProvider>
+            <LoadingProvider>
+                <AdminProvider>
+                    <div>
+                        {/* <InitialLoaderManager /> */}
+                        <CustomCursor />
+                        <AppContent />
+                    </div>
+                </AdminProvider>
+            </LoadingProvider>
         </Router>
     );
 }

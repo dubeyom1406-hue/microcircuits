@@ -1,111 +1,43 @@
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { useAuth } from './AuthContext';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useLoading } from './LoadingContext';
-
-const API_BASE_URL = '/api';
+import { auth, db } from '../lib/firebase';
+import {
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
+} from 'firebase/auth';
+import {
+    collection,
+    getDocs,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc
+} from 'firebase/firestore';
 
 const AdminContext = createContext();
 
-// Helper function to get auth token
-const getAuthToken = () => {
-    return localStorage.getItem('adminToken');
-};
-
-// Helper function to make authenticated API requests
-const apiRequest = async (endpoint, options = {}) => {
-    const url = `${API_BASE_URL}${endpoint}`;
-    const headers = {
-        'Content-Type': 'application/json',
-        ...options.headers,
-    };
-
-    const token = getAuthToken();
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    const response = await fetch(url, { ...options, headers });
-
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'API request failed');
-    }
-
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.indexOf("application/json") !== -1) {
-        return response.json();
-    } else {
-        // Return empty structure or throw specific error if it's not JSON (e.g. Vercel 404 HTML)
-        console.warn("Received non-JSON response from API:", url);
-        return [];
-    }
-};
-
 export const AdminProvider = ({ children }) => {
-    const { isAuthenticated, token, logout: authLogout } = useAuth();
+    // We are now managing auth state directly here via Firebase, 
+    // but preserving the variable names for compatibility.
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [user, setUser] = useState(null); // Add user state
     const { startLoading, stopLoading } = useLoading();
-    const [isAdmin, setIsAdmin] = useState(isAuthenticated);
 
+    // Auth Listener
     useEffect(() => {
-        setIsAdmin(isAuthenticated);
-    }, [isAuthenticated]);
-    const [vacancies, setVacancies] = useState([
-        {
-            id: 1,
-            title: "Physical Design Engineer",
-            exp: "3-5 Years",
-            location: "Ahmedabad, Gujarat",
-            description: "We are looking for a Physical Design Engineer to join our team. You will be responsible for the physical implementation of high-performance integrated circuits.",
-            date: "12 January 2026",
-            pdfUrl: "#"
-        },
-        {
-            id: 2,
-            title: "DFT Engineer",
-            exp: "2-4 Years",
-            location: "Bangalore (Remote Available)",
-            description: "Joining our DFT team, you will work on cutting-edge design for testability solutions for complex SOCs.",
-            date: "15 January 2026",
-            pdfUrl: "#"
-        },
-        {
-            id: 3,
-            title: "RTL Design Lead",
-            exp: "8-12 Years",
-            location: "Ahmedabad, Gujarat",
-            description: "Lead the design architecture and RTL development for our next-generation semiconductor products.",
-            date: "18 January 2026",
-            pdfUrl: "#"
-        }
-    ]);
-    const [caseStudies, setCaseStudies] = useState([
-        {
-            id: 1,
-            category: "Design For Testability",
-            title: "Optimizing Fault Coverage for 7nm Automotive SOC",
-            description: "How we achieved 99.5% stuck-at coverage while reducing test time by 30%.",
-            date: "10th Jan 2026",
-            pdfUrl: "#"
-        },
-        {
-            id: 2,
-            category: "Physical Design",
-            title: "Tape-Out Success: High-Speed AI Accelerator",
-            description: "Meeting aggressive timing targets for a 2GHz AI processing unit in 5nm node.",
-            date: "15th Jan 2026",
-            pdfUrl: "#"
-        },
-        {
-            id: 3,
-            category: "Design & Verification",
-            title: "Formal Verification of Multi-Core Cache Controller",
-            description: "Reducing verification cycle by 40% using advanced formal property checking.",
-            date: "20th Jan 2026",
-            pdfUrl: "#"
-        }
-    ]);
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setIsAdmin(!!currentUser);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    const [vacancies, setVacancies] = useState([]);
+    const [caseStudies, setCaseStudies] = useState([]);
     const [applications, setApplications] = useState([]);
     const [contactMessages, setContactMessages] = useState([]);
+
     const [layoutSettings, setLayoutSettings] = useState({
         navbar: {
             top: '2rem',
@@ -139,110 +71,95 @@ export const AdminProvider = ({ children }) => {
     }, []);
 
     const updateLayoutSettings = async (newSettings) => {
-        // Optimistic update
         const updated = { ...layoutSettings, ...newSettings };
         setLayoutSettings(updated);
         localStorage.setItem('miplLayoutSettings', JSON.stringify(updated));
-
-        if (isAdmin) {
-            try {
-                // Future: await apiRequest('/layout', { method: 'POST', body: JSON.stringify(newSettings) });
-            } catch (error) {
-                console.error('Error saving layout to API:', error);
-            }
-        }
     };
 
-    // Fetch data from API
-    useEffect(() => {
-        const fetchData = async () => {
-            // Only show loader if we are actually refreshing data, possibly check cache or just subtle loader?
-            // For now, let's use global loader for "slow data" as requested.
-            startLoading();
-            try {
-                // Public data (always fetch)
-                const [vacanciesData, caseStudiesData] = await Promise.all([
-                    apiRequest('/vacancies'),
-                    apiRequest('/case-studies')
-                ]);
-                setVacancies(vacanciesData);
-                setCaseStudies(caseStudiesData);
+    // Helper to map Firestore docs
+    const mapDocs = (snapshot) => {
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    };
 
-                // Admin only data
-                if (isAdmin) {
-                    const [applicationsData, contactData] = await Promise.all([
-                        apiRequest('/applications'),
-                        apiRequest('/contacts')
-                    ]);
-                    setApplications(applicationsData);
-                    setContactMessages(contactData);
-                }
+    // Usage: Fetch all data on mount (no need to wait for login for public data)
+    useEffect(() => {
+        const fetchPublicData = async () => {
+            // startLoading(); // Optional: trigger global loader
+            try {
+                const vacanciesSnap = await getDocs(collection(db, 'vacancies'));
+                setVacancies(mapDocs(vacanciesSnap));
+
+                const caseStudiesSnap = await getDocs(collection(db, 'caseStudies'));
+                setCaseStudies(mapDocs(caseStudiesSnap));
+
             } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                // Min delay to prevent flickering
-                setTimeout(() => stopLoading(), 500);
+                console.error("Error fetching public data:", error);
             }
-            setLoading(false);
         };
 
-        fetchData();
+        fetchPublicData();
+    }, []);
+
+    // Fetch Admin Data when logged in
+    useEffect(() => {
+        if (!isAdmin) {
+            setApplications([]);
+            setContactMessages([]);
+            return;
+        }
+
+        const fetchAdminData = async () => {
+            startLoading();
+            try {
+                const appsSnap = await getDocs(collection(db, 'applications'));
+                setApplications(mapDocs(appsSnap));
+
+                const contactsSnap = await getDocs(collection(db, 'contacts'));
+                setContactMessages(mapDocs(contactsSnap));
+            } catch (error) {
+                console.error("Error fetching admin data:", error);
+            } finally {
+                stopLoading();
+            }
+        };
+
+        fetchAdminData();
     }, [isAdmin]);
 
+
     const loginAdmin = async (username, password) => {
+        // NOTE: Firebase uses email/password. 
+        // If the user inputs a username (e.g. 'admin'), we might need to map it to a fake email 
+        // or just ask the user to input the email.
+        // For backwards compatibility, assuming 'username' is an email if it contains '@'.
+        // If it's just 'admin', we'll hardcode the admin email.
+
+        const email = username.includes('@') ? username : 'admin@microcircuits.com';
+
         try {
-            const response = await fetch(`${API_BASE_URL}/admin/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                localStorage.setItem('adminToken', data.token);
-                setIsAdmin(true);
-                // Reload data after login
-                const [vacanciesData, caseStudiesData, applicationsData, contactData] = await Promise.all([
-                    apiRequest('/vacancies'),
-                    apiRequest('/case-studies'),
-                    apiRequest('/applications'),
-                    apiRequest('/contacts')
-                ]);
-
-                setVacancies(vacanciesData);
-                setCaseStudies(caseStudiesData);
-                setApplications(applicationsData);
-                setContactMessages(contactData);
-
-                return true;
-            } else {
-                return false;
-            }
+            await signInWithEmailAndPassword(auth, email, password);
+            return true;
         } catch (error) {
             console.error('Login error:', error);
             return false;
         }
     };
 
-    const logoutAdmin = () => {
-        authLogout();
-        setIsAdmin(false);
-        setVacancies([]);
-        setCaseStudies([]);
-        setApplications([]);
-        setContactMessages([]);
+    const logoutAdmin = async () => {
+        try {
+            await signOut(auth);
+            setIsAdmin(false);
+        } catch (error) {
+            console.error("Logout failed", error);
+        }
     };
+
+    // --- CRUD Operations ---
 
     const addVacancy = async (vacancyData) => {
         try {
-            const newVacancy = await apiRequest('/vacancies', {
-                method: 'POST',
-                body: JSON.stringify(vacancyData),
-            });
-            setVacancies(prev => [...prev, newVacancy]);
+            const docRef = await addDoc(collection(db, 'vacancies'), vacancyData);
+            setVacancies(prev => [...prev, { id: docRef.id, ...vacancyData }]);
         } catch (error) {
             console.error('Error adding vacancy:', error);
         }
@@ -250,11 +167,9 @@ export const AdminProvider = ({ children }) => {
 
     const updateVacancy = async (id, updatedData) => {
         try {
-            const updatedVacancy = await apiRequest(`/vacancies/${id}`, {
-                method: 'PUT',
-                body: JSON.stringify(updatedData),
-            });
-            setVacancies(prev => prev.map(v => v.id === id ? updatedVacancy : v));
+            const vacancyRef = doc(db, 'vacancies', id);
+            await updateDoc(vacancyRef, updatedData);
+            setVacancies(prev => prev.map(v => v.id === id ? { ...v, ...updatedData } : v));
         } catch (error) {
             console.error('Error updating vacancy:', error);
         }
@@ -262,9 +177,7 @@ export const AdminProvider = ({ children }) => {
 
     const deleteVacancy = async (id) => {
         try {
-            await apiRequest(`/vacancies/${id}`, {
-                method: 'DELETE',
-            });
+            await deleteDoc(doc(db, 'vacancies', id));
             setVacancies(prev => prev.filter(v => v.id !== id));
         } catch (error) {
             console.error('Error deleting vacancy:', error);
@@ -273,11 +186,8 @@ export const AdminProvider = ({ children }) => {
 
     const addCaseStudy = async (studyData) => {
         try {
-            const newStudy = await apiRequest('/case-studies', {
-                method: 'POST',
-                body: JSON.stringify(studyData),
-            });
-            setCaseStudies(prev => [...prev, newStudy]);
+            const docRef = await addDoc(collection(db, 'caseStudies'), studyData);
+            setCaseStudies(prev => [...prev, { id: docRef.id, ...studyData }]);
         } catch (error) {
             console.error('Error adding case study:', error);
         }
@@ -285,11 +195,9 @@ export const AdminProvider = ({ children }) => {
 
     const updateCaseStudy = async (id, updatedData) => {
         try {
-            const updatedStudy = await apiRequest(`/case-studies/${id}`, {
-                method: 'PUT',
-                body: JSON.stringify(updatedData),
-            });
-            setCaseStudies(prev => prev.map(s => s.id === id ? updatedStudy : s));
+            const studyRef = doc(db, 'caseStudies', id);
+            await updateDoc(studyRef, updatedData);
+            setCaseStudies(prev => prev.map(s => s.id === id ? { ...s, ...updatedData } : s));
         } catch (error) {
             console.error('Error updating case study:', error);
         }
@@ -297,9 +205,7 @@ export const AdminProvider = ({ children }) => {
 
     const deleteCaseStudy = async (id) => {
         try {
-            await apiRequest(`/case-studies/${id}`, {
-                method: 'DELETE',
-            });
+            await deleteDoc(doc(db, 'caseStudies', id));
             setCaseStudies(prev => prev.filter(s => s.id !== id));
         } catch (error) {
             console.error('Error deleting case study:', error);
@@ -308,11 +214,8 @@ export const AdminProvider = ({ children }) => {
 
     const addApplication = async (appData) => {
         try {
-            const newApplication = await apiRequest('/applications', {
-                method: 'POST',
-                body: JSON.stringify(appData),
-            });
-            setApplications(prev => [...prev, newApplication]);
+            const docRef = await addDoc(collection(db, 'applications'), appData);
+            setApplications(prev => [...prev, { id: docRef.id, ...appData }]);
         } catch (error) {
             console.error('Error adding application:', error);
         }
@@ -320,9 +223,7 @@ export const AdminProvider = ({ children }) => {
 
     const deleteApplication = async (id) => {
         try {
-            await apiRequest(`/applications/${id}`, {
-                method: 'DELETE',
-            });
+            await deleteDoc(doc(db, 'applications', id));
             setApplications(prev => prev.filter(a => a.id !== id));
         } catch (error) {
             console.error('Error deleting application:', error);
@@ -331,11 +232,8 @@ export const AdminProvider = ({ children }) => {
 
     const addContactMessage = async (messageData) => {
         try {
-            const newMessage = await apiRequest('/contacts', {
-                method: 'POST',
-                body: JSON.stringify(messageData),
-            });
-            setContactMessages(prev => [...prev, newMessage]);
+            const docRef = await addDoc(collection(db, 'contacts'), messageData);
+            setContactMessages(prev => [...prev, { id: docRef.id, ...messageData }]);
         } catch (error) {
             console.error('Error adding contact message:', error);
         }
@@ -343,9 +241,7 @@ export const AdminProvider = ({ children }) => {
 
     const deleteContactMessage = async (id) => {
         try {
-            await apiRequest(`/contacts/${id}`, {
-                method: 'DELETE',
-            });
+            await deleteDoc(doc(db, 'contacts', id));
             setContactMessages(prev => prev.filter(m => m.id !== id));
         } catch (error) {
             console.error('Error deleting contact message:', error);
@@ -354,7 +250,7 @@ export const AdminProvider = ({ children }) => {
 
     return (
         <AdminContext.Provider value={{
-            isAdmin, loginAdmin, logoutAdmin,
+            user, isAdmin, loginAdmin, logoutAdmin,
             vacancies, addVacancy, updateVacancy, deleteVacancy,
             caseStudies, addCaseStudy, updateCaseStudy, deleteCaseStudy,
             applications, addApplication, deleteApplication,

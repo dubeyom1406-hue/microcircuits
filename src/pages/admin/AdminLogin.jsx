@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAdmin } from '../../context/AdminContext';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { login } = useAuth();
+    const { loginAdmin } = useAdmin();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -16,11 +16,11 @@ const AdminLogin = () => {
         setError('');
         setIsSubmitting(true);
 
-        const result = await login(username, password);
-        if (result.success) {
+        const success = await loginAdmin(username, password);
+        if (success) {
             navigate('/admin/dashboard');
         } else {
-            setError(result.message);
+            setError('Invalid credentials');
         }
         setIsSubmitting(false);
     };

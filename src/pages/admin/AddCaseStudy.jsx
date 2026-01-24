@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Save } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAdmin } from '../../context/AdminContext';
 
 const AddCaseStudy = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ const AddCaseStudy = () => {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
-    const { token } = useAuth();
+    const { addCaseStudy } = useAdmin();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -22,26 +22,12 @@ const AddCaseStudy = () => {
         setMessage({ type: '', text: '' });
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/case-studies`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(formData)
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setMessage({ type: 'success', text: 'Case study published successfully!' });
-                setFormData({ title: '', category: '', description: '', pdfUrl: '' });
-                setTimeout(() => navigate('/admin/dashboard'), 2000);
-            } else {
-                setMessage({ type: 'error', text: data.message || 'Failed to add case study' });
-            }
+            await addCaseStudy(formData);
+            setMessage({ type: 'success', text: 'Case study published successfully!' });
+            setFormData({ title: '', category: '', description: '', pdfUrl: '' });
+            setTimeout(() => navigate('/admin/dashboard'), 2000);
         } catch (error) {
-            setMessage({ type: 'error', text: 'Server error. Is the backend running?' });
+            setMessage({ type: 'error', text: 'Failed to add case study' });
         } finally {
             setIsSubmitting(false);
         }
