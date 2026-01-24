@@ -12,14 +12,4 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
-  server: {
-    proxy: {
-      '/api': {
-        target: process.env.API_TARGET || process.env.BACKEND_URL || 'http://localhost:5000',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-    port: parseInt(process.env.VITE_PORT) || 5174,
-  },
 })
