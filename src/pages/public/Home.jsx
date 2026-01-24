@@ -112,11 +112,12 @@ const Home = () => {
                                         type: "spring",
                                         stiffness: 100,
                                         damping: 15,
-                                        duration: 1.5
+                                        duration: 1.5,
+                                        delay: phase === 0 ? 0.8 : 0 // Delay appearance
                                     },
                                     x: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
                                     y: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
-                                    opacity: { duration: 0.5 }
+                                    opacity: { duration: 0.5, delay: phase === 0 ? 0.8 : 0 } // Delay appearance
                                 }}
                                 style={{ position: 'absolute', zIndex: 110 }}
                                 className="flex flex-col items-center justify-center pointer-events-none"
