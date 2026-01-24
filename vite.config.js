@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [
     react({
       babel: {
-        plugins: [['babel-plugin-react-compiler']],
+        babelrc: false,
+        configFile: false,
       },
     }),
     tailwindcss(),

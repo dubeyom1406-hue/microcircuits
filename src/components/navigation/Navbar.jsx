@@ -47,28 +47,40 @@ const Navbar = () => {
             zIndex: 3000,
             pointerEvents: 'none',
             width: '100%',
-            height: isMobile ? '80px' : '110px',
+            height: isMobile ? '100px' : '160px',
             display: 'grid',
             gridTemplateColumns: isMobile ? 'auto 1fr auto' : '1fr auto 1fr',
             alignItems: 'center',
             padding: isMobile ? '0 1.5rem' : '0 3rem'
         }}>
 
-            {/* Left Column: Branding (Removed) */}
-            <div style={{ justifySelf: 'start', zIndex: 100 }}></div>
+            {/* Left Column: Branding Logo */}
+            <div style={{ justifySelf: 'start', zIndex: 100 }}>
+                {(!isMobile && location.pathname !== '/') && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8 }}
+                        style={{ cursor: 'pointer', pointerEvents: 'auto' }}
+                        onClick={() => navigate('/')}
+                    >
+                        <img
+                            src="/logo_large.png"
+                            alt="MIPL Logo"
+                            style={{ height: '120px', width: 'auto', filter: 'drop-shadow(0 0 20px rgba(0, 194, 255, 0.6))' }}
+                        />
+                    </motion.div>
+                )}
+            </div>
 
 
             {/* Center Column: Navigation Capsule (Hidden on Mobile) */}
-            {!isMobile && (
+            {(!isMobile && location.pathname !== '/') && (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <motion.header
                         initial={{ y: -120, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        transition={{
-                            delay: location.pathname === '/' ? 10 : 0, // 10s delay on Home page
-                            duration: 0.8,
-                            ease: "easeOut"
-                        }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
                         style={{
                             padding: navbar.padding || '0.6rem 2rem',
                             display: 'flex',
@@ -124,6 +136,18 @@ const Navbar = () => {
 
             {/* Right Column: Branding Text / Mobile Toggle */}
             <div style={{ justifySelf: 'end', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                {(!isMobile && location.pathname !== '/') && (
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                        style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', pointerEvents: 'auto', cursor: 'pointer' }}
+                        onClick={() => navigate('/')}
+                    >
+                        <span style={{ color: '#fff', fontSize: '1.8rem', fontWeight: '800', letterSpacing: '-0.03em', lineHeight: 1 }}>MicroCircuits</span>
+                        <span style={{ color: '#00c2ff', fontSize: '1.3rem', fontWeight: '600', letterSpacing: '0.08em', marginTop: '6px' }}>Innovations</span>
+                    </motion.div>
+                )}
 
                 {isMobile && (
                     <button

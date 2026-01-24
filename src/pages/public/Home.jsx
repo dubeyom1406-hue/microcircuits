@@ -1,35 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import IntroLoader from '../../components/common/IntroLoader';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const [showLoader, setShowLoader] = useState(true);
 
     useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        if (params.get('skip') === 'true') {
-            setShowLoader(false);
-            navigate('/expertise');
-        }
-    }, [location]);
-
-    const handleLoaderComplete = () => {
-        setShowLoader(false);
+        // App.jsx handles the initial loader.
+        // If we are on Home after loading, just go to Expertise.
         navigate('/expertise');
-    };
+    }, [navigate]);
 
     return (
-        <>
-            {showLoader && <IntroLoader onComplete={handleLoaderComplete} />}
-            {!showLoader && (
-                <div className="min-h-screen bg-black text-white flex items-center justify-center">
-                    {/* Fallback content in case navigation lags */}
-                    <p>Redirecting to Expertise...</p>
-                </div>
-            )}
-        </>
+        <div className="min-h-screen bg-black flex items-center justify-center">
+            <p className="text-gray-500">Redirecting...</p>
+        </div>
     );
 };
 

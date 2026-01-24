@@ -7,13 +7,6 @@ const Expertise = ({ onNavigate }) => {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const graphSectionRef = useRef(null);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth < 1024);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     const activeCard = searchParams.get('card');
 
@@ -86,46 +79,22 @@ const Expertise = ({ onNavigate }) => {
             className="expertise-page"
             style={{ background: '#000', color: '#fff', fontFamily: '"Outfit", sans-serif', paddingBottom: '100px' }}
         >
-            <section className="hero-section mobile-centered" style={{
-                minHeight: isMobile ? '40vh' : '60vh',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                textAlign: 'center',
-                paddingTop: isMobile ? '80px' : '100px',
-                width: '100%'
-            }}>
+            <section className="hero-section mobile-centered" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center', paddingTop: '100px', width: '100%' }}>
                 <motion.h1
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    style={{
-                        fontSize: isMobile ? '2.5rem' : 'clamp(2rem, 8vw, 4rem)',
-                        fontWeight: 600,
-                        letterSpacing: '-1px',
-                        lineHeight: 1.1,
-                        marginBottom: '0.5rem',
-                        textAlign: 'center',
-                        padding: '0 1rem'
-                    }}
+                    style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', fontWeight: 600, letterSpacing: '-1px', lineHeight: 1.1, marginBottom: '0.5rem', textAlign: 'center' }}
                 >
-                    <motion.span layoutId="word-your">Your</motion.span>{" "}
-                    <motion.span layoutId="word-next-chip" style={{ color: '#00c2ff' }}>Next Chip</motion.span>{" "}
-                    <motion.span layoutId="word-starts">Starts</motion.span>
+                    Your <span style={{ color: '#00c2ff' }}>Next Chip</span> Starts
                 </motion.h1>
                 <motion.h1
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.1 }}
-                    style={{
-                        fontSize: isMobile ? '2.5rem' : 'clamp(2rem, 8vw, 4rem)',
-                        fontWeight: 600,
-                        letterSpacing: '-1px',
-                        lineHeight: 1.1,
-                        textAlign: 'center'
-                    }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    style={{ fontSize: 'clamp(2rem, 8vw, 4rem)', fontWeight: 600, letterSpacing: '-1px', lineHeight: 1.1, textAlign: 'center' }}
                 >
-                    <motion.span layoutId="word-here">Here</motion.span>
+                    Here
                 </motion.h1>
             </section>
 
@@ -192,20 +161,12 @@ const Expertise = ({ onNavigate }) => {
                         font-weight: 400;
                         opacity: 0.9;
                     }
-                    @media (max-width: 1100px) {
-                        .service-card {
-                            width: 100%;
-                            max-width: 400px;
-                            height: auto;
-                            min-height: 320px;
-                        }
-                    }
                     @media (max-width: 768px) {
                         .service-card {
                             width: 100%;
-                            max-width: 100%;
+                            max-width: 350px;
                             height: auto;
-                            min-height: 280px;
+                            min-height: 300px;
                         }
                         .service-card h2 {
                             font-size: 22px;
@@ -216,7 +177,8 @@ const Expertise = ({ onNavigate }) => {
                     }
                     @media (max-width: 480px) {
                         .service-card {
-                            padding: 24px;
+                            padding: 20px;
+                            margin: 0 10px;
                         }
                         .service-card h2 {
                             font-size: 20px;
@@ -228,9 +190,8 @@ const Expertise = ({ onNavigate }) => {
                     display: 'flex',
                     flexWrap: 'wrap',
                     justifyContent: 'center',
-                    gap: isMobile ? '15px' : '20px',
-                    width: '100%',
-                    padding: isMobile ? '0 1rem' : '0'
+                    gap: '20px',
+                    width: '100%'
                 }}>
                     {cards.map((card, index) => {
                         const isHidden = activeCard && activeCard !== card.id;
@@ -308,7 +269,7 @@ const Expertise = ({ onNavigate }) => {
                         transition={{ duration: 0.5 }}
                         ref={graphSectionRef}
                         style={{
-                            padding: isMobile ? '0 1rem' : '0 2rem',
+                            padding: '0 2rem',
                             maxWidth: '1400px',
                             margin: '0 auto 100px',
                             display: 'flex',
@@ -324,53 +285,50 @@ const Expertise = ({ onNavigate }) => {
                                     width: '100%',
                                     maxWidth: '1200px',
                                     display: 'flex',
-                                    flexDirection: isMobile ? 'column' : 'row',
+                                    flexWrap: 'wrap',
                                     justifyContent: 'space-between',
-                                    alignItems: isMobile ? 'stretch' : 'center',
-                                    gap: isMobile ? '2rem' : '4rem'
+                                    alignItems: 'center',
+                                    gap: '4rem'
                                 }}>
                                     {/* Left Text Content */}
                                     <motion.div
-                                        initial={{ opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 20 : 0 }}
-                                        animate={{ opacity: 1, x: 0, y: 0 }}
+                                        initial={{ opacity: 0, x: -50 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5 }}
-                                        style={{ flex: 1, minWidth: isMobile ? '100%' : '350px' }}
+                                        style={{ flex: 1, minWidth: '350px' }}
                                     >
-                                        <h2 style={{ fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
+                                        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
                                             Where<br />
                                             Design<br />
                                             Meets Certainty.
                                         </h2>
-                                        <p style={{ fontSize: isMobile ? '1.1rem' : '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
+                                        <p style={{ fontSize: '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
                                             From <span style={{ color: '#00c2ff' }}>RTL to Validation</span>, we build and verify complex SoCs with Precision, Predictability, and Performance. Our integrated approach ensures your architecture works — <span style={{ color: '#00c2ff' }}>exactly</span> as imagined.
                                         </p>
                                     </motion.div>
 
                                     {/* Right Card: DV Signoff */}
                                     <motion.div
-                                        initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 }}
-                                        animate={{ opacity: 1, x: 0, y: 0 }}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
                                         style={{
                                             flex: 1,
-                                            minWidth: isMobile ? '100%' : '350px',
+                                            minWidth: '350px',
                                             background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
-                                            borderRadius: isMobile ? '20px' : '30px',
-                                            padding: isMobile ? '2rem' : '3rem',
+                                            borderRadius: '30px',
+                                            padding: '3rem',
                                             border: '1px solid rgba(255,255,255,0.1)',
                                             position: 'relative',
                                             boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
                                         }}
                                     >
-                                        <h3 style={{ fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
+                                        <h3 style={{ fontSize: '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
                                             DV Signoff
                                         </h3>
-                                        <h3 style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem', lineHeight: 1 }}>
+                                        <h3 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
                                             Completed
                                         </h3>
-                                        <p style={{ fontSize: '1.1rem', color: '#ccc', fontWeight: 500, marginBottom: '2rem' }}>
-                                            5+ First Pass Silicon
-                                        </p>
 
                                         <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 3rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                             {[
@@ -416,48 +374,48 @@ const Expertise = ({ onNavigate }) => {
                                     width: '100%',
                                     maxWidth: '1200px',
                                     display: 'flex',
-                                    flexDirection: isMobile ? 'column' : 'row',
+                                    flexWrap: 'wrap',
                                     justifyContent: 'space-between',
-                                    alignItems: isMobile ? 'stretch' : 'center',
-                                    gap: isMobile ? '2rem' : '4rem'
+                                    alignItems: 'center',
+                                    gap: '4rem'
                                 }}>
                                     {/* Left Text Content */}
                                     <motion.div
-                                        initial={{ opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 20 : 0 }}
-                                        animate={{ opacity: 1, x: 0, y: 0 }}
+                                        initial={{ opacity: 0, x: -50 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5 }}
-                                        style={{ flex: 1, minWidth: isMobile ? '100%' : '350px' }}
+                                        style={{ flex: 1, minWidth: '350px' }}
                                     >
-                                        <h2 style={{ fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
+                                        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
                                             Next-Gen<br />
                                             Verification for<br />
                                             Next-Gen Silicon
                                         </h2>
-                                        <p style={{ fontSize: isMobile ? '1.1rem' : '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
+                                        <p style={{ fontSize: '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
                                             Our DV Practices evolve with Technology ensuring your chips are ready for <span style={{ color: '#00c2ff' }}>AI, 5G, automotive, and beyond</span>
                                         </p>
                                     </motion.div>
 
                                     {/* Right Card: DV Turnkeys */}
                                     <motion.div
-                                        initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 }}
-                                        animate={{ opacity: 1, x: 0, y: 0 }}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
                                         style={{
                                             flex: 1,
-                                            minWidth: isMobile ? '100%' : '350px',
+                                            minWidth: '350px',
                                             background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
-                                            borderRadius: isMobile ? '20px' : '30px',
-                                            padding: isMobile ? '2rem' : '3rem',
+                                            borderRadius: '30px',
+                                            padding: '3rem',
                                             border: '1px solid rgba(255,255,255,0.1)',
                                             position: 'relative',
                                             boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
                                         }}
                                     >
-                                        <h3 style={{ fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
+                                        <h3 style={{ fontSize: '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
                                             DV Turnkeys
                                         </h3>
-                                        <h3 style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
+                                        <h3 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
                                             Completed
                                         </h3>
 
@@ -487,7 +445,7 @@ const Expertise = ({ onNavigate }) => {
                                                 borderRadius: '50px',
                                                 color: '#fff',
                                                 fontWeight: 700,
-                                                fontSize: isMobile ? '1rem' : '1.2rem',
+                                                fontSize: '1.2rem',
                                                 cursor: 'pointer',
                                                 boxShadow: '0 4px 15px rgba(0, 102, 204, 0.4)',
                                                 transition: 'transform 0.2s'
@@ -508,48 +466,48 @@ const Expertise = ({ onNavigate }) => {
                                     width: '100%',
                                     maxWidth: '1200px',
                                     display: 'flex',
-                                    flexDirection: isMobile ? 'column' : 'row',
+                                    flexWrap: 'wrap',
                                     justifyContent: 'space-between',
-                                    alignItems: isMobile ? 'stretch' : 'center',
-                                    gap: isMobile ? '2rem' : '4rem'
+                                    alignItems: 'center',
+                                    gap: '4rem'
                                 }}>
                                     {/* Left Text Content */}
                                     <motion.div
-                                        initial={{ opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 20 : 0 }}
-                                        animate={{ opacity: 1, x: 0, y: 0 }}
+                                        initial={{ opacity: 0, x: -50 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5 }}
-                                        style={{ flex: 1, minWidth: isMobile ? '100%' : '350px' }}
+                                        style={{ flex: 1, minWidth: '350px' }}
                                     >
-                                        <h2 style={{ fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
+                                        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
                                             Confidence<br />
                                             Built Into<br />
                                             Every Scan
                                         </h2>
-                                        <p style={{ fontSize: isMobile ? '1.1rem' : '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
+                                        <p style={{ fontSize: '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
                                             From <span style={{ color: '#00c2ff' }}>Scan Stitching to ATPG and MBIST</span>, our DFT flows ensure Silicon quality without compromise — at any scale, for <span style={{ color: '#00c2ff' }}>Every Architecture</span>
                                         </p>
                                     </motion.div>
 
                                     {/* Right Card: DFT Signoff */}
                                     <motion.div
-                                        initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 }}
-                                        animate={{ opacity: 1, x: 0, y: 0 }}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
                                         style={{
                                             flex: 1,
-                                            minWidth: isMobile ? '100%' : '350px',
+                                            minWidth: '350px',
                                             background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
-                                            borderRadius: isMobile ? '20px' : '30px',
-                                            padding: isMobile ? '2rem' : '3rem',
+                                            borderRadius: '30px',
+                                            padding: '3rem',
                                             border: '1px solid rgba(255,255,255,0.1)',
                                             position: 'relative',
                                             boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
                                         }}
                                     >
-                                        <h3 style={{ fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
+                                        <h3 style={{ fontSize: '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
                                             DFT Signoff
                                         </h3>
-                                        <h3 style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
+                                        <h3 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
                                             Completed
                                         </h3>
 
@@ -563,7 +521,7 @@ const Expertise = ({ onNavigate }) => {
                                                 "DFT Verification — Tool-driven validation and debug",
                                                 "Test Engineering — Yield-aware support to silicon bring-up"
                                             ].map((item, index) => (
-                                                <li key={index} style={{ display: 'flex', gap: '100px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                <li key={index} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
                                                     <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
                                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                     </div>
@@ -598,66 +556,82 @@ const Expertise = ({ onNavigate }) => {
                                     width: '100%',
                                     maxWidth: '1200px',
                                     display: 'flex',
-                                    flexDirection: isMobile ? 'column' : 'row',
+                                    flexWrap: 'wrap',
                                     justifyContent: 'space-between',
-                                    alignItems: isMobile ? 'stretch' : 'center',
-                                    gap: isMobile ? '2rem' : '4rem'
+                                    alignItems: 'center',
+                                    gap: '4rem'
                                 }}>
                                     {/* Left Text Content */}
                                     <motion.div
-                                        initial={{ opacity: 0, x: isMobile ? 0 : -50, y: isMobile ? 20 : 0 }}
-                                        animate={{ opacity: 1, x: 0, y: 0 }}
+                                        initial={{ opacity: 0, x: -50 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5 }}
-                                        style={{ flex: 1, minWidth: isMobile ? '100%' : '350px' }}
+                                        style={{ flex: 1, minWidth: '350px' }}
                                     >
-                                        <h2 style={{ fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
+                                        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
                                             Smarter.<br />
                                             Faster.<br />
                                             Certain.
                                         </h2>
-                                        <p style={{ fontSize: isMobile ? '1.1rem' : '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
+                                        <p style={{ fontSize: '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
                                             <span style={{ color: '#00c2ff' }}>AI-Driven</span> Autonomous DFT with Self-optimizing ATPG, ML fault prediction, controllability-guided DFT, SLM lifecycle analytics, layout-aware autonomous debug — powering the next era of <span style={{ color: '#00c2ff' }}>Silicon innovation</span>
                                         </p>
                                     </motion.div>
 
                                     {/* Right Card: DFT Turnkeys */}
                                     <motion.div
-                                        initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 }}
-                                        animate={{ opacity: 1, x: 0, y: 0 }}
+                                        initial={{ opacity: 0, x: 50 }}
+                                        animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
                                         style={{
                                             flex: 1,
-                                            minWidth: isMobile ? '100%' : '350px',
+                                            minWidth: '350px',
                                             background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
-                                            borderRadius: isMobile ? '20px' : '30px',
-                                            padding: isMobile ? '2rem' : '3rem',
+                                            borderRadius: '30px',
+                                            padding: '3rem',
                                             border: '1px solid rgba(255,255,255,0.1)',
                                             position: 'relative',
                                             boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
                                         }}
                                     >
-                                        <h3 style={{ fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
+                                        <h3 style={{ fontSize: '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
                                             DFT Turnkeys
                                         </h3>
-                                        <h3 style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
+                                        <h3 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
                                             Completed
                                         </h3>
 
                                         <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 3rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                            {[
-                                                "Self-Optimizing ATPG — AI-based X-filling",
-                                                "Pattern generation — ML-driven scan diagnosis",
-                                                "AI Fault Prediction — Defect correlation",
-                                                "SLM & Lifecycle Analytics — RTL to ATPG",
-                                                "In-Field Learning — AI-augmented LBIST/MBIST"
-                                            ].map((item, index) => (
-                                                <li key={index} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
-                                                    <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
-                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                    </div>
-                                                    {item}
-                                                </li>
-                                            ))}
+                                            <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </div>
+                                                Self-Optimizing ATPG — AI-based X-filling
+                                            </li>
+                                            <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </div>
+                                                Pattern generation — ML-driven scan diagnosis
+                                            </li>
+                                            <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </div>
+                                                AI Fault Prediction — Defect correlation
+                                            </li>
+                                            <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </div>
+                                                SLM & Lifecycle Analytics — RTL to ATPG
+                                            </li>
+                                            <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                </div>
+                                                In-Field Learning — AI-augmented LBIST/MBIST
+                                            </li>
                                         </ul>
 
                                         <div
@@ -690,8 +664,8 @@ const Expertise = ({ onNavigate }) => {
                                 transition: 'max-width 0.5s ease',
                                 background: (showDetail ? 'transparent' : '#1a1a1a'), // Precision section has its own card bg
                                 border: (showDetail ? 'none' : '1px solid #333'),
-                                borderRadius: isMobile ? '20px' : '30px',
-                                padding: (showDetail ? '0' : (isMobile ? '2rem' : '4rem')),
+                                borderRadius: '30px',
+                                padding: (showDetail ? '0' : '4rem'),
                                 overflow: 'visible' // Allow hover effects to pop out
                             }}>
                                 {!showDetail ? (
@@ -701,13 +675,13 @@ const Expertise = ({ onNavigate }) => {
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
                                         transition={{ duration: 0.5 }}
-                                        style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'stretch' : 'flex-start', flexWrap: 'wrap', gap: '2rem', position: 'relative', zIndex: 2 }}
+                                        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem', position: 'relative', zIndex: 2 }}
                                     >
-                                        <div style={{ maxWidth: isMobile ? '100%' : '400px' }}>
-                                            <h2 style={{ fontSize: isMobile ? '2.5rem' : '3.5rem', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem' }}>
+                                        <div style={{ maxWidth: '400px' }}>
+                                            <h2 style={{ fontSize: '3.5rem', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem' }}>
                                                 Expertise that<br />scales with<br />every <span style={{ color: '#fff' }}>shrink</span>
                                             </h2>
-                                            <p style={{ fontSize: isMobile ? '1rem' : '1.2rem', color: '#aaa', lineHeight: 1.6 }}>
+                                            <p style={{ fontSize: '1.2rem', color: '#aaa', lineHeight: 1.6 }}>
                                                 From <span style={{ color: '#00c2ff' }}>180nm to 1.8nm</span>, we deliver across every node.
                                             </p>
                                         </div>
@@ -715,7 +689,7 @@ const Expertise = ({ onNavigate }) => {
                                         <div
                                             style={{
                                                 flex: 1,
-                                                minWidth: isMobile ? '100%' : '300px',
+                                                minWidth: '300px',
                                                 background: '#0a0a0a',
                                                 borderRadius: '20px',
                                                 padding: '2rem',
@@ -767,20 +741,20 @@ const Expertise = ({ onNavigate }) => {
                                         transition={{ duration: 0.5 }}
                                         style={{
                                             display: 'flex',
-                                            flexDirection: isMobile ? 'column' : 'row',
+                                            flexWrap: 'wrap',
                                             justifyContent: 'space-between',
-                                            alignItems: isMobile ? 'stretch' : 'center',
-                                            gap: isMobile ? '2rem' : '4rem',
+                                            alignItems: 'center',
+                                            gap: '4rem',
                                             width: '100%'
                                         }}
                                     >
-                                        <div style={{ flex: 1, minWidth: isMobile ? '100%' : '350px' }}>
-                                            <h2 style={{ fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
+                                        <div style={{ flex: 1, minWidth: '350px' }}>
+                                            <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
                                                 Precision in Every<br />
                                                 Layer. Innovation<br />
                                                 at Every Scale
                                             </h2>
-                                            <p style={{ fontSize: isMobile ? '1.1rem' : '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
+                                            <p style={{ fontSize: '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
                                                 Full-Chip Placement and Routing. Tuned for<br />
                                                 Power, Performance, Area, and Turn-Around-<br />
                                                 Time excellence
@@ -789,18 +763,18 @@ const Expertise = ({ onNavigate }) => {
 
                                         <div style={{
                                             flex: 1,
-                                            minWidth: isMobile ? '100%' : '350px',
+                                            minWidth: '350px',
                                             background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
-                                            borderRadius: isMobile ? '20px' : '30px',
-                                            padding: isMobile ? '2rem' : '3rem',
+                                            borderRadius: '30px',
+                                            padding: '3rem',
                                             border: '1px solid rgba(255,255,255,0.1)',
                                             position: 'relative',
                                             boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
                                         }}>
-                                            <h3 style={{ fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
+                                            <h3 style={{ fontSize: '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
                                                 Silicon Taped-
                                             </h3>
-                                            <h3 style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
+                                            <h3 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
                                                 Out
                                             </h3>
 
@@ -809,7 +783,7 @@ const Expertise = ({ onNavigate }) => {
                                                     <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
                                                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                     </div>
-                                                    25+ First Pass Silicon with Billion Gates
+                                                    30+ First Pass Silicon with Billion Gates
                                                 </li>
                                                 <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
                                                     <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>

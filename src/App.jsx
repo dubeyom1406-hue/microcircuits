@@ -45,12 +45,28 @@ const InitialLoaderManager = () => {
 
 const AppContent = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const [globalLoading, setGlobalLoading] = React.useState(true);
 
     return (
         <div className="App">
-            <Navbar />
+            <AnimatePresence>
+                {globalLoading && (
+                    <IntroLoader
+                        key="intro-loader-global"
+                        onComplete={() => {
+                            setGlobalLoading(false);
+                            if (location.pathname === '/') {
+                                navigate('/expertise');
+                            }
+                        }}
+                    />
+                )}
+            </AnimatePresence>
+
+            {!globalLoading && <Navbar />}
             <main>
-                <AnimatePresence mode="wait">
+                <AnimatePresence>
                     <Routes location={location} key={location.pathname}>
                         <Route path="/" element={<Home />} />
                         <Route path="/expertise" element={<Expertise />} />
