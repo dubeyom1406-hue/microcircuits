@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../../context/AdminContext';
 
@@ -36,10 +35,7 @@ const AdminLogin = () => {
             padding: '1rem',
             fontFamily: '"Outfit", sans-serif'
         }}>
-            <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8 }}
+            <div
                 style={{
                     width: '100%',
                     maxWidth: '400px',
@@ -91,13 +87,11 @@ const AdminLogin = () => {
                     </div>
 
                     {error && (
-                        <motion.p
-                            initial={{ opacity: 0, y: -5 }}
-                            animate={{ opacity: 1, y: 0 }}
+                        <p
                             style={{ color: '#ff4b4b', fontSize: '0.85rem', textAlign: 'center', margin: '0' }}
                         >
                             {error}
-                        </motion.p>
+                        </p>
                     )}
 
                     <button
@@ -130,7 +124,7 @@ const AdminLogin = () => {
                 }}>
                     MIPL MATRIX SECURE ACCESS
                 </p>
-            </motion.div>
+            </div>
         </div>
     );
 };

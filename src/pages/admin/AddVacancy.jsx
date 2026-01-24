@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Send } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
@@ -100,9 +99,7 @@ const AddVacancy = () => {
                 </div>
 
                 {message.text && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
+                    <div
                         style={{
                             padding: '1rem',
                             borderRadius: '12px',
@@ -114,7 +111,7 @@ const AddVacancy = () => {
                         }}
                     >
                         {message.text}
-                    </motion.div>
+                    </div>
                 )}
 
                 <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
@@ -177,5 +174,6 @@ const inputStyle = {
     width: '100%',
     fontFamily: 'inherit'
 };
+
 
 export default AddVacancy;

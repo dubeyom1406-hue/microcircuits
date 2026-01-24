@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Settings, Save, RefreshCw, Layout, Type, Image as ImageIcon } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
 

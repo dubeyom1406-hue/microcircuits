@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -54,14 +53,9 @@ const AdminLayout = ({ children }) => {
             overflow: 'hidden'
         }}>
             {/* Sidebar */}
-            <motion.aside
-                initial={false}
-                animate={{
-                    width: isSidebarOpen ? '280px' : (isMobile ? '0px' : '80px'),
-                    x: isMobile && !isSidebarOpen ? -100 : 0,
-                    opacity: isMobile && !isSidebarOpen ? 0 : 1
-                }}
+            <aside
                 style={{
+                    width: isSidebarOpen ? '280px' : (isMobile ? '0px' : '80px'),
                     background: 'rgba(10, 10, 10, 0.95)',
                     borderRight: '1px solid rgba(255, 255, 255, 0.05)',
                     backdropFilter: 'blur(20px)',
@@ -74,7 +68,8 @@ const AdminLayout = ({ children }) => {
                     left: 0,
                     zIndex: 1000,
                     overflow: 'hidden',
-                    boxShadow: isMobile && isSidebarOpen ? '0 0 50px rgba(0,0,0,0.5)' : 'none'
+                    boxShadow: isMobile && isSidebarOpen ? '0 0 50px rgba(0,0,0,0.5)' : 'none',
+                    transition: 'width 0.3s ease'
                 }}
             >
                 {/* Logo Section */}
@@ -96,13 +91,11 @@ const AdminLayout = ({ children }) => {
                         }}
                     />
                     {isSidebarOpen && (
-                        <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
+                        <span
                             style={{ fontWeight: 700, fontSize: '1.1rem', letterSpacing: '0.5px' }}
                         >
                             MIPL <span style={{ color: '#00c2ff' }}>MATRIX</span>
-                        </motion.span>
+                        </span>
                     )}
                 </div>
 
@@ -159,8 +152,8 @@ const AdminLayout = ({ children }) => {
                         </div>
                         {isSidebarOpen && (
                             <div style={{ overflow: 'hidden' }}>
-                                <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>{user?.username || 'Admin'}</p>
-                                <p style={{ margin: 0, fontSize: '0.7rem', color: '#666' }}>System Administrator</p>
+                                <p style={{ margin: 0, fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>{user?.displayName || user?.email?.split('@')[0] || 'Admin'}</p>
+                                <p style={{ margin: 0, fontSize: '0.7rem', color: '#666' }}>{user?.email || 'System Administrator'}</p>
                             </div>
                         )}
                     </div>
@@ -189,7 +182,7 @@ const AdminLayout = ({ children }) => {
                 </div>
 
                 {/* Toggle Button */}
-            </motion.aside>
+            </aside>
 
             {/* Mobile Toggle Button - Moved Outside Sidebar */}
             {isMobile && (
@@ -255,13 +248,9 @@ const AdminLayout = ({ children }) => {
                     </div>
                 </div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
+                <div>
                     {children}
-                </motion.div>
+                </div>
             </main>
         </div>
     );
