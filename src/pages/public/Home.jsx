@@ -97,27 +97,19 @@ const Home = () => {
                         </motion.div>
 
 
-                        {/* Brand Text Animation: Center to Top-Right (Mirrors Logo) */}
-                        {phase >= 0 && (
+                        {/* Brand Text Animation: Center to Top-Right (Serialized: Starts after Logo Move) */}
+                        {phase >= 2 && (
                             <motion.div
-                                initial={{ opacity: 0, scale: 0 }}
+                                initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
                                 animate={{
-                                    opacity: phase >= 0 ? 1 : 0,
-                                    scale: phase >= 1 ? (isMobile ? 0.3 : 0.25) : (phase >= 0 ? 1 : 0),
-                                    x: phase >= 1 ? (isMobile ? '35vw' : '42vw') : 0, // Moves Right
-                                    y: phase >= 1 ? (isMobile ? '-44vh' : '-44vh') : 0, // Moves Up
+                                    opacity: 1,
+                                    scale: isMobile ? 0.3 : 0.25,
+                                    x: isMobile ? '35vw' : '42vw', // Moves Right
+                                    y: isMobile ? '-44vh' : '-44vh', // Moves Up
                                 }}
                                 transition={{
-                                    scale: {
-                                        type: "spring",
-                                        stiffness: 100,
-                                        damping: 15,
-                                        duration: 1.5,
-                                        delay: phase === 0 ? 0.8 : 0 // Delay appearance
-                                    },
-                                    x: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
-                                    y: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
-                                    opacity: { duration: 0.5, delay: phase === 0 ? 0.8 : 0 } // Delay appearance
+                                    duration: 1.5,
+                                    ease: [0.16, 1, 0.3, 1]
                                 }}
                                 style={{ position: 'absolute', zIndex: 110 }}
                                 className="flex flex-col items-center justify-center pointer-events-none"
