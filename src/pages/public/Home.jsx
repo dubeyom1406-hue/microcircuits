@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-    const [phase, setPhase] = useState(-1); // -1: Wait, 0: Logo Bloom, 1: Logo Move, 2: MIPL Text, 3: Design, 4: Deliver, 5: End
+    const [phase, setPhase] = useState(0); // Fixed: Start immediately
     const [subPhase, setSubPhase] = useState(0);
     const [blueFill, setBlueFill] = useState(false);
     const [yellowFill, setYellowFill] = useState(false);

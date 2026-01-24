@@ -145,7 +145,7 @@ function App() {
                 <LoadingProvider>
                     <AdminProvider>
                         <div>
-                            <InitialLoaderManager />
+                            {/* <InitialLoaderManager /> */}
                             <CustomCursor />
                             <AppContent />
                         </div>
