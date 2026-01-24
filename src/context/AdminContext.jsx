@@ -31,7 +31,14 @@ const apiRequest = async (endpoint, options = {}) => {
         throw new Error(errorData.message || 'API request failed');
     }
 
-    return response.json();
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+        return response.json();
+    } else {
+        // Return empty structure or throw specific error if it's not JSON (e.g. Vercel 404 HTML)
+        console.warn("Received non-JSON response from API:", url);
+        return [];
+    }
 };
 
 export const AdminProvider = ({ children }) => {
