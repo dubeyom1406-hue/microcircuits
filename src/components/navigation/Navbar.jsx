@@ -64,6 +64,11 @@ const Navbar = () => {
                     <motion.header
                         initial={{ y: -50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
+                        transition={{
+                            delay: location.pathname === '/' ? 10 : 0, // 10s delay on Home page
+                            duration: 0.8,
+                            ease: "easeOut"
+                        }}
                         style={{
                             padding: navbar.padding || '0.6rem 2rem',
                             display: 'flex',

@@ -21,19 +21,20 @@ const Home = () => {
             setTimeout(() => setPhase(1), 5000), // Move logo to corner
             setTimeout(() => setPhase(2), 7000), // Show MIPL text (Center)
             setTimeout(() => setMoveText(true), 8500), // Move MIPL text to corner (DELAYED)
-            setTimeout(() => setPhase(3), 10000), // Start Design. Great. Engineering.
-            setTimeout(() => setSubPhase(1), 11000), // "Great."
-            setTimeout(() => setSubPhase(2), 12000), // "Engineering"
-            setTimeout(() => setYellowFill(true), 12500), // Slogan fill
-            setTimeout(() => setPhase(4), 16000), // Design. Develop. Deliver.
-            setTimeout(() => setSubPhase(3), 17500), // Develop.
-            setTimeout(() => setSubPhase(4), 19000), // Deliver.
-            setTimeout(() => setSubPhase(5), 20500), // Slogan
-            setTimeout(() => setBlueFill(true), 21500), // Slogan fill
+            // Navbar slides in at 10000ms (Handled in Navbar.jsx)
+            setTimeout(() => setPhase(3), 11500), // Start Design. Great. Engineering. (Delayed for Header)
+            setTimeout(() => setSubPhase(1), 12500), // "Great."
+            setTimeout(() => setSubPhase(2), 13500), // "Engineering"
+            setTimeout(() => setYellowFill(true), 14000), // Slogan fill
+            setTimeout(() => setPhase(4), 17500), // Design. Develop. Deliver.
+            setTimeout(() => setSubPhase(3), 19000), // Develop.
+            setTimeout(() => setSubPhase(4), 20500), // Deliver.
+            setTimeout(() => setSubPhase(5), 22000), // Slogan
+            setTimeout(() => setBlueFill(true), 23000), // Slogan fill
             setTimeout(() => {
                 setPhase(5);
                 setTimeout(() => navigate('/expertise'), 800);
-            }, 24000)
+            }, 25500)
         ];
 
         return () => {
