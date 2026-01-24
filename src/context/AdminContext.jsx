@@ -28,15 +28,30 @@ export const AdminProvider = ({ children }) => {
     // Auth Listener
     useEffect(() => {
         if (!auth) {
-            console.error("Firebase auth not initialized in AdminContext");
+            console.error("Firebase auth not initialized in AdminContext. Check Vercel Env Vars.");
+            setLoading(false); // Don't block the UI if Firebase fails
             return;
         }
+
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            console.log("Auth state changed:", currentUser ? "Logged In" : "Not Logged In");
             setUser(currentUser);
             setIsAdmin(!!currentUser);
             setLoading(false);
+        }, (error) => {
+            console.error("Auth state error:", error);
+            setLoading(false);
         });
-        return () => unsubscribe();
+
+        // Failsafe: if nothing happens in 5 seconds, stop loading
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 5000);
+
+        return () => {
+            unsubscribe();
+            clearTimeout(timer);
+        };
     }, []);
 
     const [vacancies, setVacancies] = useState([]);
