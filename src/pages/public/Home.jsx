@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [phase, setPhase] = useState(0); // Fixed: Start immediately
+    const [moveText, setMoveText] = useState(false); // New state for text movement
     const [subPhase, setSubPhase] = useState(0);
     const [blueFill, setBlueFill] = useState(false);
     const [yellowFill, setYellowFill] = useState(false);
@@ -18,7 +19,8 @@ const Home = () => {
         const timers = [
             setTimeout(() => setPhase(0), 3000), // Start Logo Bloom after preloader
             setTimeout(() => setPhase(1), 5000), // Move logo to corner
-            setTimeout(() => setPhase(2), 7000), // Show MIPL text
+            setTimeout(() => setPhase(2), 7000), // Show MIPL text (Center)
+            setTimeout(() => setMoveText(true), 8500), // Move MIPL text to corner (DELAYED)
             setTimeout(() => setPhase(3), 10000), // Start Design. Great. Engineering.
             setTimeout(() => setSubPhase(1), 11000), // "Great."
             setTimeout(() => setSubPhase(2), 12000), // "Engineering"
@@ -97,18 +99,27 @@ const Home = () => {
                         </motion.div>
 
 
-                        {/* Brand Text Animation: Center to Top-Right (Serialized: Starts after Logo Move) */}
+                        {/* Brand Text Animation: Center to Top-Right (Sequential: Show -> Then Move) */}
                         {phase >= 2 && (
                             <motion.div
                                 initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                                animate={{
-                                    opacity: 1,
-                                    scale: isMobile ? 0.3 : 0.25,
-                                    x: isMobile ? '35vw' : '42vw', // Moves Right
-                                    y: isMobile ? '-44vh' : '-44vh', // Moves Up
-                                }}
+                                animate={
+                                    moveText
+                                        ? {
+                                            opacity: 1,
+                                            scale: isMobile ? 0.3 : 0.25,
+                                            x: isMobile ? '35vw' : '42vw',
+                                            y: isMobile ? '-44vh' : '-44vh'
+                                        } // Move to Corner
+                                        : {
+                                            opacity: 1,
+                                            scale: 1,
+                                            x: 0,
+                                            y: 0
+                                        } // Show at Center (Inside-Out)
+                                }
                                 transition={{
-                                    duration: 1.5,
+                                    duration: 1.2,
                                     ease: [0.16, 1, 0.3, 1]
                                 }}
                                 style={{ position: 'absolute', zIndex: 110 }}
