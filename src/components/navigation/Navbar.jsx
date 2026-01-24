@@ -125,25 +125,7 @@ const Navbar = () => {
             {/* Right Column: Branding Text / Mobile Toggle */}
             <div style={{ justifySelf: 'end', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 {!isMobile && (
-                    <motion.div
-                        layoutId="branding-text"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        style={{
-                            fontSize: '1.3rem',
-                            fontWeight: '600',
-                            letterSpacing: '0.05em',
-                            pointerEvents: 'none',
-                            whiteSpace: 'nowrap',
-                            display: 'flex',
-                            gap: '0.4rem',
-                            alignItems: 'center',
-                            zIndex: 100
-                        }}
-                    >
-                        <span style={{ color: '#fff' }}>MicroCircuits</span>
-                        <span style={{ color: '#b0bebe' }}>Innovations</span>
-                    </motion.div>
+                    {/* Branding Text Removed per user request */ }
                 )}
 
                 {isMobile && (
