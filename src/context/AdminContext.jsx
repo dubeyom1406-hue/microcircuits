@@ -5,7 +5,9 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
+    setPersistence,
+    browserSessionPersistence
 } from 'firebase/auth';
 import {
     collection,
@@ -27,7 +29,7 @@ export const AdminProvider = ({ children }) => {
 
     const [loading, setLoading] = useState(true);
 
-    // Diagnostic Check
+    // Diagnostic Check & Persistence Config
     useEffect(() => {
         const envs = {
             hasApiKey: !!import.meta.env.VITE_FIREBASE_API_KEY,
@@ -36,6 +38,13 @@ export const AdminProvider = ({ children }) => {
             apiUrl: import.meta.env.VITE_API_URL
         };
         console.log("FIREBASE_ENV_CHECK:", envs);
+
+        // Security: Set session-based persistence
+        if (auth) {
+            setPersistence(auth, browserSessionPersistence)
+                .then(() => console.log("Auth persistence set to SESSION (local)"))
+                .catch((error) => console.error("Persistence error:", error));
+        }
     }, []);
 
     // Auth Listener
@@ -69,11 +78,6 @@ export const AdminProvider = ({ children }) => {
             clearTimeout(timer);
         };
     }, []);
-
-    const dismissLoading = () => {
-        console.log("Manual loading dismissal triggered via ProtectedRoute");
-        setLoading(false);
-    };
 
     const [vacancies, setVacancies] = useState([]);
     const [caseStudies, setCaseStudies] = useState([]);
