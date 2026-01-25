@@ -29,11 +29,13 @@ export const AdminProvider = ({ children }) => {
 
     // Diagnostic Check
     useEffect(() => {
-        console.log("FIREBASE_ENV_CHECK:", {
+        const envs = {
             hasApiKey: !!import.meta.env.VITE_FIREBASE_API_KEY,
             hasAuthDomain: !!import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-            projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID
-        });
+            projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+            apiUrl: import.meta.env.VITE_API_URL
+        };
+        console.log("FIREBASE_ENV_CHECK:", envs);
     }, []);
 
     // Auth Listener
@@ -54,11 +56,13 @@ export const AdminProvider = ({ children }) => {
             setLoading(false);
         });
 
-        // Failsafe: if nothing happens in 6 seconds, stop loading
+        // Failsafe: if nothing happens in 4 seconds, stop loading
         const timer = setTimeout(() => {
-            console.warn("Auth check timed out. Forcing loading off.");
-            setLoading(false);
-        }, 6000);
+            if (loading) {
+                console.warn("Auth check timed out after 4s. Forcing loading off.");
+                setLoading(false);
+            }
+        }, 4000);
 
         return () => {
             unsubscribe();
@@ -67,7 +71,7 @@ export const AdminProvider = ({ children }) => {
     }, []);
 
     const dismissLoading = () => {
-        console.log("Manual loading dismissal triggered");
+        console.log("Manual loading dismissal triggered via ProtectedRoute");
         setLoading(false);
     };
 

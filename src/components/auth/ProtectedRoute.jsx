@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
     React.useEffect(() => {
         let timer;
         if (loading) {
-            timer = setTimeout(() => setShowDebug(true), 6000);
+            timer = setTimeout(() => setShowDebug(true), 4000);
         }
         return () => clearTimeout(timer);
     }, [loading]);

@@ -12,6 +12,7 @@ import { AnimatePresence } from 'framer-motion';
 import { AdminProvider } from './context/AdminContext';
 import './index.css';
 import './App.css';
+import AdminRegister from './pages/admin/AdminRegister';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLayout from './components/admin/AdminLayout';
@@ -85,6 +86,7 @@ const AppContent = () => {
                         {/* Admin Routes */}
                         <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
                         <Route path="/admin/login" element={<AdminLogin />} />
+                        <Route path="/admin/register" element={<AdminRegister />} />
 
                         <Route path="/admin/dashboard" element={
                             <ProtectedRoute>

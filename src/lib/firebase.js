@@ -19,18 +19,16 @@ let db;
 
 try {
     if (!firebaseConfig.apiKey) {
-        console.warn("Firebase: API Key missing. Check .env.local or Vercel Environment Variables.");
-        // We continue, but expect auth/db to fail if used.
+        console.warn("Firebase Config: API Key missing! Check environment variables.");
     }
 
-    console.log("Initializing Firebase...");
+    console.log("Initializing Firebase Instance...");
     app = initializeApp(firebaseConfig);
     auth = getAuth(app);
     db = getFirestore(app);
-    console.log("Firebase initialized successfully");
+    console.log("Firebase initialized successfully with Project ID:", firebaseConfig.projectId);
 } catch (error) {
-    console.error("Firebase Initialization Failed:", error.message);
-    // Proceed with undefined auth/db, allowing the UI to render what it can.
+    console.error("Firebase Critical Initialization Failure:", error.message);
 }
 
 export { auth, db };
