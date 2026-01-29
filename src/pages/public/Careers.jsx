@@ -358,8 +358,8 @@ const Careers = () => {
                                     }}
                                     style={{
                                         display: 'grid',
-                                        gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-                                        gap: isMobile ? '1rem' : '1.5rem',
+                                        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                                        gap: '2rem',
                                         width: '100%'
                                     }}
                                 >

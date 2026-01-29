@@ -124,8 +124,8 @@ const About = () => {
 
             {/* Mission Section */}
             <div style={{ padding: '80px 20px', textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
-                <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', color: '#fff', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                    At <img src="/logo_large.png" alt="MIPL" style={{ height: '30px', width: 'auto', borderRadius: '4px' }} /> MicroCircuits Innovations, We Began with <span style={{ color: '#00aaff' }}>One Mission:</span>
+                <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', color: '#fff', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                    At MicroCircuits Innovations, We Began with <span style={{ color: '#00aaff' }}>One Mission:</span>
                 </h2>
                 <h3 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.8rem)', fontWeight: 800, marginBottom: '50px', lineHeight: 1.2, color: '#00aaff' }}>
                     "To Transform the Future of Custom SoC Design"
