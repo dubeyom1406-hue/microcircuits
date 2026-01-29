@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Send, UploadCloud, FileText, X } from 'lucide-react';
 import { useAdmin } from '../../context/AdminContext';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../../lib/firebase';
+import { supabase } from '../../lib/supabase';
 
 const AddVacancy = () => {
     const [formData, setFormData] = useState({
@@ -42,11 +41,27 @@ const AddVacancy = () => {
         try {
             let finalPdfUrl = formData.pdfUrl;
 
-            // Handle PDF Upload to Firebase Storage
+            // Handle PDF Upload to Supabase Storage
             if (pdfFile) {
-                const fileRef = ref(storage, `vacancies/${Date.now()}_${pdfFile.name}`);
-                const snapshot = await uploadBytes(fileRef, pdfFile);
-                finalPdfUrl = await getDownloadURL(snapshot.ref);
+                // Generate a unique file name
+                const fileName = `${Date.now()}_${pdfFile.name.replace(/\s+/g, '-')}`;
+
+                // Upload to Supabase bucket 'case-studies'
+                const { data, error: uploadError } = await supabase.storage
+                    .from('case-studies') // Using existing bucket
+                    .upload(fileName, pdfFile, {
+                        cacheControl: '3600',
+                        upsert: false
+                    });
+
+                if (uploadError) throw uploadError;
+
+                // Get the Public URL
+                const { data: { publicUrl } } = supabase.storage
+                    .from('case-studies')
+                    .getPublicUrl(fileName);
+
+                finalPdfUrl = publicUrl;
             }
 
             const submissionData = {

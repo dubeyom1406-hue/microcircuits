@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAdmin } from '../context/AdminContext';
 import Search from './Search';
+import AnimatedLogo from './common/AnimatedLogo';
 
 const Navbar = () => {
     const { layoutSettings } = useAdmin();
@@ -27,60 +28,27 @@ const Navbar = () => {
     const { navbar } = layoutSettings;
 
     return (
-        <div style={{
-            position: 'fixed', // KEEPS IT AT THE TOP OF THE SCREEN
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 1000,
-            pointerEvents: 'none', // Allows clicks to pass through empty spaces
-            width: '100%',
-            height: '100px',
-            display: 'grid',
-            gridTemplateColumns: '1fr auto 1fr', // 3 Columns: Left (Branding), Center (Nav), Right (Slogan)
-            alignItems: 'center',
-            padding: '0 3rem'
-        }}>
+        <div className="fixed top-0 left-0 right-0 z-[1000] pointer-events-none w-full h-[80px] md:h-[100px] grid grid-cols-2 md:grid-cols-[1fr_auto_1fr] items-center px-4 md:px-12">
 
             {/* --- LEFT COLUMN: Logo + Company Name --- */}
             <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem', // Space between logo and text
-                    pointerEvents: 'auto',
-                    cursor: 'pointer',
-                    justifySelf: 'start'
-                }}
+                className="flex items-center gap-2 md:gap-4 pointer-events-auto cursor-pointer justify-self-start"
                 onClick={() => navigate('/')}
             >
                 {/* Logo Image */}
-                <img
-                    src="/logo_large.png"
-                    alt="MicroCircuits Innovations"
-                    style={{
-                        height: '50px',
-                        filter: 'drop-shadow(0 0 8px rgba(0, 194, 255, 0.5))'
-                    }}
-                />
+                {/* Animated Logo */}
+                <AnimatedLogo className="w-12 h-6 md:w-[80px] md:h-[40px]" />
 
-                {/* Company Name (Moved from Right to Left) */}
-                <div style={{
-                    fontSize: '1.2rem',
-                    fontWeight: '500',
-                    color: '#fff',
-                    whiteSpace: 'nowrap',
-                    letterSpacing: '0.02em'
-                    
-                }}>
+                {/* Company Name */}
+                <div className="text-sm md:text-[1.2rem] font-medium text-white whitespace-nowrap tracking-wide leading-tight">
                     MicroCircuits Innovations
                 </div>
             </motion.div>
 
             {/* --- CENTER COLUMN: Navigation Capsule --- */}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className="hidden md:flex justify-center">
                 <motion.header
                     initial={{ y: -50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -95,11 +63,7 @@ const Navbar = () => {
                         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)',
                         pointerEvents: 'auto'
                     }}>
-                    <nav style={{
-                        display: 'flex',
-                        gap: '1.8rem',
-                        alignItems: 'center'
-                    }}>
+                    <nav className="flex gap-4 lg:gap-[1.8rem] items-center">
                         {navLinks.map((link) => {
                             const isActive = location.pathname === link.id;
                             return (
@@ -141,15 +105,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.5 }}
-                style={{
-                    fontSize: '1rem',
-                    fontWeight: '400',
-                    color: '#b0bebe', // Muted text color for the slogan
-                    pointerEvents: 'none',
-                    justifySelf: 'end',
-                    whiteSpace: 'nowrap',
-                    letterSpacing: '0.05em'
-                }}
+                className="hidden md:block text-[1rem] font-normal text-[#b0bebe] pointer-events-none justify-self-end whitespace-nowrap tracking-wider"
             >
                 Innovations. Redefined
             </motion.div>

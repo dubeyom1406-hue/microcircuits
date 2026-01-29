@@ -237,30 +237,34 @@ const Careers = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8, delay: 0.2 }}
                             style={{
-                                fontSize: isMobile ? '1.2rem' : 'clamp(1.5rem, 4vw, 2.5rem)',
+                                fontSize: isMobile ? '1.8rem' : 'clamp(2rem, 5vw, 3.5rem)',
                                 fontWeight: 700,
-                                color: '#555',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.5em',
-                                marginBottom: '2rem',
+                                color: 'rgba(255, 255, 255, 0.8)',
+                                textTransform: 'none',
+                                letterSpacing: 'normal',
+                                marginTop: '0',
+                                marginBottom: '0.5rem',
                                 display: 'block'
                             }}
                         >
-                            Find Your <span style={{ color: '#00c2ff' }}>Perfect</span>
+                            Find Your Perfect
                         </motion.span>
                         <motion.h2
                             initial={{ scale: 0.8, opacity: 0 }}
                             whileInView={{ scale: 1, opacity: 1 }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             style={{
-                                fontSize: isMobile ? '4.5rem' : 'clamp(6rem, 15vw, 12rem)',
-                                fontWeight: 900,
+                                fontSize: isMobile ? '3rem' : 'clamp(3.5rem, 8vw, 5.5rem)',
+                                fontWeight: 800,
                                 margin: 0,
-                                lineHeight: 0.8,
-                                letterSpacing: '-5px',
-                                background: 'linear-gradient(180deg, #fff 0%, #444 100%)',
+                                lineHeight: 1,
+                                letterSpacing: '-0.02em',
+                                background: 'linear-gradient(90deg, #ec4899 0%, #06b6d4 100%)',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
+                                backgroundClip: 'text',
+                                color: 'transparent',
+                                display: 'inline-block'
                             }}
                         >
                             "Role"

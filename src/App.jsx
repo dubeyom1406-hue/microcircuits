@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import Navbar from './components/navigation/Navbar';
 import Home from './pages/public/Home';
@@ -103,6 +103,7 @@ const AppContent = () => {
                                 </AdminLayout>
                             </ProtectedRoute>
                         } />
+                        
 
                         <Route path="/admin/vacancies" element={
                             <ProtectedRoute>
