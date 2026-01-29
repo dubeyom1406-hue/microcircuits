@@ -66,9 +66,9 @@ const IntroLoader = ({ onComplete }) => {
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{
                                 opacity: phase >= 0 ? 1 : 0,
-                                scale: phase >= 3 ? (isMobile ? 0.2 : 0.384) : (phase >= 1 ? 0.6 : (phase >= 0 ? 1 : 0)), // Mobile: Still 0.2
-                                x: phase >= 1 ? (isMobile ? '-35vw' : '-44vw') : 0, // Mobile: Less left shift to keep it visible
-                                y: phase >= 1 ? '-44vh' : 0,
+                                scale: phase >= 3 ? (isMobile ? 0.25 : 0.384) : (phase >= 1 ? 0.6 : (phase >= 0 ? 1 : 0)),
+                                x: phase >= 1 ? (isMobile ? '-40vw' : '-44vw') : 0,
+                                y: phase >= 1 ? (isMobile ? '-46vh' : '-44vh') : 0,
                             }}
                             transition={{
                                 scale: { type: "spring", stiffness: 100, damping: 15, duration: 1.5 },
@@ -100,9 +100,9 @@ const IntroLoader = ({ onComplete }) => {
                             initial={{ opacity: 0, scale: 0.9, y: 20 }}
                             animate={{
                                 opacity: phase >= 2 ? 1 : 0,
-                                scale: phase >= 3 ? (isMobile ? 0.3 : 0.45) : (phase >= 2 ? (isMobile ? 0.6 : 1) : 0.9), // Mobile: Smaller final scale
-                                x: phase >= 3 ? (isMobile ? '10vw' : '-28.5vw') : 0, // Mobile: Shift RIGHT to avoid overlap
-                                y: phase >= 3 ? (isMobile ? '-43vh' : '-44.5vh') : (phase >= 2 ? 0 : 20), // Mobile: Align Y
+                                scale: phase >= 3 ? (isMobile ? 0.5 : 0.45) : (phase >= 2 ? (isMobile ? 0.6 : 1) : 0.9),
+                                x: phase >= 3 ? (isMobile ? '-5vw' : '-28.5vw') : 0,
+                                y: phase >= 3 ? (isMobile ? '-46vh' : '-44.5vh') : (phase >= 2 ? 0 : 20),
                             }}
                             transition={{
                                 duration: 1.5,

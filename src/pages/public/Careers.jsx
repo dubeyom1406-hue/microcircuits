@@ -165,13 +165,13 @@ const Careers = () => {
                 <div key="careers-content">
                     {/* Slide 1: Join a team */}
                     <section id="hero-section" style={{
-                        height: isMobile ? '45vh' : '65vh',
+                        height: isMobile ? '35vh' : '65vh',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
                         textAlign: 'center',
-                        padding: isMobile ? '7rem 1rem 0' : '8rem 1rem 0',
+                        padding: isMobile ? '5rem 1rem 0' : '8rem 1rem 0',
                         position: 'relative'
                     }}>
                         <motion.h1
@@ -223,7 +223,7 @@ const Careers = () => {
 
                     {/* Slide 2: "Role" */}
                     <section id="role-section" style={{
-                        height: isMobile ? '20vh' : '30vh',
+                        height: isMobile ? '15vh' : '30vh',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
