@@ -52,7 +52,7 @@ const AppContent = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const isPathAdmin = location.pathname.startsWith('/admin');
-    const [globalLoading, setGlobalLoading] = React.useState(false); // Debugging: Disable loader
+    const [globalLoading, setGlobalLoading] = React.useState(!isPathAdmin);
 
     React.useEffect(() => {
         if (isPathAdmin) {
@@ -64,8 +64,8 @@ const AppContent = () => {
 
     return (
         <div className="App">
-            {/* <GlobalModal /> */}
-            {/* <InfiniteLogoPreloader /> */}
+            <GlobalModal />
+            <InfiniteLogoPreloader />
             <AnimatePresence>
                 {(!isPathAdmin && globalLoading) && (
                     <IntroLoader
@@ -188,7 +188,7 @@ function App() {
                         <AdminProvider>
                             <div>
                                 {/* <InitialLoaderManager /> */}
-                                {/* <CustomCursor /> */}
+                                <CustomCursor />
                                 <AppContent />
                             </div>
                         </AdminProvider>
