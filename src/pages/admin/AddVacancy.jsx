@@ -39,6 +39,10 @@ const AddVacancy = () => {
         setMessage({ type: '', text: '' });
 
         try {
+            if (!supabase) {
+                throw new Error("Supabase client is not initialized. Please check your .env configuration.");
+            }
+
             let finalPdfUrl = formData.pdfUrl;
 
             // Handle PDF Upload to Supabase Storage

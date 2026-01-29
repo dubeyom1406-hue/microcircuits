@@ -41,6 +41,10 @@ const AddCaseStudy = () => {
         setMessage({ type: '', text: '' });
 
         try {
+            if (!supabase) {
+                throw new Error("Supabase client is not initialized. Please check your .env configuration.");
+            }
+
             let finalPdfUrl = formData.pdfUrl;
 
             // 1. If a file is selected, upload it to Supabase Storage
@@ -143,7 +147,7 @@ const AddCaseStudy = () => {
                                 type="text"
                                 placeholder="e.g. 5nm Automotive SoC Success"
                                 value={formData.title}
-                                onChange={(e) => setFormData({...formData, title: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                                 style={inputStyle}
                                 required
                             />
@@ -153,7 +157,7 @@ const AddCaseStudy = () => {
                             <label style={labelStyle}>Category / Industry</label>
                             <select
                                 value={formData.category}
-                                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                                 style={inputStyle}
                                 required
                             >
@@ -172,8 +176,8 @@ const AddCaseStudy = () => {
                                 rows="5"
                                 placeholder="Brief overview of the challenge and solution..."
                                 value={formData.description}
-                                onChange={(e) => setFormData({...formData, description: e.target.value})}
-                                style={{...inputStyle, resize: 'vertical'}}
+                                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                style={{ ...inputStyle, resize: 'vertical' }}
                                 required
                             />
                         </div>
