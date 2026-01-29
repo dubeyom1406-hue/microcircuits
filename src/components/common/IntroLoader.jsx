@@ -111,7 +111,7 @@ const IntroLoader = ({ onComplete }) => {
                             style={{
                                 display: 'flex',
                                 gap: '0.6rem',
-                                fontSize: phase >= 3 ? '2.5rem' : '4rem', // Dynamic font size based on phase
+                                fontSize: phase >= 3 ? (isMobile ? '1.5rem' : '2.5rem') : (isMobile ? '2.4rem' : '4rem'), // Dynamic font size based on phase
                                 fontWeight: '600',
                                 letterSpacing: '0.02em',
                                 whiteSpace: 'nowrap',
