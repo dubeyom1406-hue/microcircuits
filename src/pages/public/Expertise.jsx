@@ -755,107 +755,108 @@ const Expertise = ({ onNavigate }) => {
                                                 <h3 style={{ margin: 0, fontSize: '1.2rem' }}>Scale. <span style={{ color: '#00c2ff' }}>Re-Mastered</span></h3>
                                             </div>
                                         </motion.div>
-                                        ) : (
-                                        // 2. Precision / Silicon Taped-Out Section Content
+                                    </motion.div>
+                                ) : (
+                                    // 2. Precision / Silicon Taped-Out Section Content
+                                    <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                        style={{
+                                            display: 'flex',
+                                            flexDirection: isMobile ? 'column' : 'row',
+                                            justifyContent: 'space-between',
+                                            alignItems: isMobile ? 'stretch' : 'center',
+                                            gap: isMobile ? '2rem' : '4rem',
+                                            width: '100%'
+                                        }}
+                                    >
+                                        <div style={{ flex: 1, minWidth: isMobile ? '100%' : '350px' }}>
+                                            <h2 style={{ fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
+                                                Precision in Every<br />
+                                                Layer. Innovation<br />
+                                                at Every Scale
+                                            </h2>
+                                            <p style={{ fontSize: isMobile ? '1.1rem' : '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
+                                                Full-Chip Placement and Routing. Tuned for<br />
+                                                Power, Performance, Area, and Turn-Around-<br />
+                                                Time excellence
+                                            </p>
+                                        </div>
+
                                         <motion.div
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            exit={{ opacity: 0 }}
-                                            transition={{ duration: 0.5 }}
+                                            whileHover={{ borderColor: '#fff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
                                             style={{
-                                                display: 'flex',
-                                                flexDirection: isMobile ? 'column' : 'row',
-                                                justifyContent: 'space-between',
-                                                alignItems: isMobile ? 'stretch' : 'center',
-                                                gap: isMobile ? '2rem' : '4rem',
-                                                width: '100%'
+                                                flex: 1,
+                                                minWidth: isMobile ? '100%' : '350px',
+                                                background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
+                                                borderRadius: isMobile ? '20px' : '30px',
+                                                padding: isMobile ? '2rem' : '3rem',
+                                                border: '1px solid rgba(255,255,255,0.1)',
+                                                position: 'relative',
+                                                boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
                                             }}
                                         >
-                                            <div style={{ flex: 1, minWidth: isMobile ? '100%' : '350px' }}>
-                                                <h2 style={{ fontSize: isMobile ? '2.5rem' : 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', color: '#fff' }}>
-                                                    Precision in Every<br />
-                                                    Layer. Innovation<br />
-                                                    at Every Scale
-                                                </h2>
-                                                <p style={{ fontSize: isMobile ? '1.1rem' : '1.4rem', color: '#3b82f6', lineHeight: 1.5, fontWeight: 500 }}>
-                                                    Full-Chip Placement and Routing. Tuned for<br />
-                                                    Power, Performance, Area, and Turn-Around-<br />
-                                                    Time excellence
-                                                </p>
-                                            </div>
+                                            <h3 style={{ fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
+                                                Silicon Taped-
+                                            </h3>
+                                            <h3 style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
+                                                Out
+                                            </h3>
 
-                                            <motion.div
-                                                whileHover={{ borderColor: '#fff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
+                                            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 3rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                    <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                    </div>
+                                                    25+ First Pass Silicon with Billion Gates
+                                                </li>
+                                                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                    <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                    </div>
+                                                    Bump planning for 2D, 2.5D and 3D ASIC
+                                                </li>
+                                                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                    <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                    </div>
+                                                    Multi-Voltage Domain & Low-Power ASICs
+                                                </li>
+                                                <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
+                                                    <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                    </div>
+                                                    <span style={{ opacity: 0.8 }}>CPUs, GPUs, WLAN, ARM cores, SerDes, MIPI, LPDDR4, PCIe Gen5, USB, ETHERNET & IP Hardening</span>
+                                                </li>
+                                            </ul>
+
+                                            <div
+                                                onClick={() => setShowDetail(false)}
                                                 style={{
-                                                    flex: 1,
-                                                    minWidth: isMobile ? '100%' : '350px',
-                                                    background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
-                                                    borderRadius: isMobile ? '20px' : '30px',
-                                                    padding: isMobile ? '2rem' : '3rem',
-                                                    border: '1px solid rgba(255,255,255,0.1)',
-                                                    position: 'relative',
-                                                    boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
+                                                    background: 'rgba(255, 255, 255, 0.05)',
+                                                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                                                    borderRadius: '20px',
+                                                    padding: '1.5rem',
+                                                    textAlign: 'center',
+                                                    cursor: 'pointer',
+                                                    transition: '0.2s'
                                                 }}
+                                                onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
+                                                onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
                                             >
-                                                <h3 style={{ fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
-                                                    Silicon Taped-
-                                                </h3>
-                                                <h3 style={{ fontSize: isMobile ? '2rem' : '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '2rem', lineHeight: 1 }}>
-                                                    Out
-                                                </h3>
-
-                                                <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 3rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                                    <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
-                                                        <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
-                                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                        </div>
-                                                        25+ First Pass Silicon with Billion Gates
-                                                    </li>
-                                                    <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
-                                                        <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
-                                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                        </div>
-                                                        Bump planning for 2D, 2.5D and 3D ASIC
-                                                    </li>
-                                                    <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
-                                                        <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
-                                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                        </div>
-                                                        Multi-Voltage Domain & Low-Power ASICs
-                                                    </li>
-                                                    <li style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', color: '#ccc', fontSize: '1rem', lineHeight: 1.4 }}>
-                                                        <div style={{ minWidth: '20px', height: '20px', borderRadius: '50%', background: '#007bff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3px' }}>
-                                                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                        </div>
-                                                        <span style={{ opacity: 0.8 }}>CPUs, GPUs, WLAN, ARM cores, SerDes, MIPI, LPDDR4, PCIe Gen5, USB, ETHERNET & IP Hardening</span>
-                                                    </li>
-                                                </ul>
-
-                                                <div
-                                                    onClick={() => setShowDetail(false)}
-                                                    style={{
-                                                        background: 'rgba(255, 255, 255, 0.05)',
-                                                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                                                        borderRadius: '20px',
-                                                        padding: '1.5rem',
-                                                        textAlign: 'center',
-                                                        cursor: 'pointer',
-                                                        transition: '0.2s'
-                                                    }}
-                                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'}
-                                                    onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'}
-                                                >
-                                                    <h4 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}>GDSII.</h4>
-                                                    <h4 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 400, color: '#aaa', marginTop: '5px' }}>Guaranteed</h4>
-                                                </div>
-                                            </motion.div>
+                                                <h4 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}>GDSII.</h4>
+                                                <h4 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 400, color: '#aaa', marginTop: '5px' }}>Guaranteed</h4>
+                                            </div>
                                         </motion.div>
+                                    </motion.div>
                                 )}
-                                    </div>
-                                )}
-                            </motion.section>
+                            </div>
                         )}
-                    </AnimatePresence>
+                    </motion.section>
+                )}
+            </AnimatePresence>
         </motion.div>
     );
 };
