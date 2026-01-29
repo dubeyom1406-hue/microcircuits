@@ -1,18 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MicroCircuits Innovations</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap"
-        rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MicroCircuits Innovations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <!-- DEBUGGING OVERLAY: CAPTURE ERRORS -->
+  <div id="debug-log"
+    style="position:fixed; top:0; left:0; width:100%; height:50%; background:rgba(0,0,0,0.8); color:lime; overflow:auto; z-index:99999; font-family:monospace; font-size:12px; pointer-events:none; display:none;">
+  </div>
+  <script>
+    (function () {
+      var log = document.getElementById('debug-log');
+      if (!log) return;
+
+      function showLog(msg) {
+        log.style.display = 'block';
+        log.innerHTML += '<div>> ' + msg + '</div>';
+      }
+
+      window.onerror = function (msg, url, line, col, error) {
+        showLog("ERROR: " + msg + " at " + line + ":" + col);
+        return false;
+      };
+
+      window.onunhandledrejection = function (event) {
+        showLog("UNHANDLED PROMISE REJECTION: " + event.reason);
+      };
+
+      // Also capture console.error
+      var oldError = console.error;
+      console.error = function () {
+        var args = Array.from(arguments).join(' ');
+        showLog("CONSOLE ERROR: " + args);
+        oldError.apply(console, arguments);
+      };
+    })();
+  </script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
