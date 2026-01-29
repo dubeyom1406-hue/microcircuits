@@ -12,8 +12,10 @@ let supabaseInstance = null;
 if (supabaseUrl && supabaseKey) {
     try {
         supabaseInstance = createClient(supabaseUrl, supabaseKey);
+        console.log("Supabase Client Initialized");
     } catch (e) {
         console.error("Supabase init failed:", e);
+        supabaseInstance = null;
     }
 } else {
     console.warn("Supabase Env Vars missing! Supabase client will be null. Check Vercel Settings.");

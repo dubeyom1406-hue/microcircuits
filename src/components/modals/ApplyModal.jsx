@@ -60,6 +60,7 @@ const ApplyModal = ({ isOpen, onClose, jobTitle }) => {
             if (selectedFile) {
                 if (!supabase) {
                     alert("System Error: File upload service is not configured. Please contact support.");
+                    console.error("Supabase client is null. Check environment variables.");
                     throw new Error("Supabase client is not initialized.");
                 }
                 // Use 'resumes/' prefix to keep it organized within the existing bucket

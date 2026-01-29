@@ -27,8 +27,10 @@ try {
     console.log("Initializing Firebase Instance...");
     app = initializeApp(firebaseConfig);
     auth = getAuth(app);
-    db = getFirestore(app);
-    storage = getStorage(app); // 3. Initialize Storage
+    if (app) {
+        db = getFirestore(app);
+        storage = getStorage(app); // 3. Initialize Storage
+    }
     console.log("Firebase initialized successfully with Project ID:", firebaseConfig.projectId);
 } catch (error) {
     console.error("Firebase Critical Initialization Failure:", error.message);

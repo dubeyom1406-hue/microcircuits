@@ -28,13 +28,13 @@ const Navbar = () => {
     const { navbar } = layoutSettings;
 
     return (
-        <div className="fixed top-0 left-0 right-0 z-[1000] pointer-events-none w-full h-[80px] md:h-[100px] grid grid-cols-2 md:grid-cols-[1fr_auto_1fr] items-center px-4 md:px-12">
+        <div className="fixed top-0 left-0 right-0 z-[1000] pointer-events-none w-full h-[80px] md:h-[100px] flex items-center justify-between px-4 md:px-12">
 
             {/* --- LEFT COLUMN: Logo + Company Name --- */}
             <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-2 md:gap-4 pointer-events-auto cursor-pointer justify-self-start"
+                className="flex items-center gap-2 md:gap-4 pointer-events-auto cursor-pointer"
                 onClick={() => navigate('/')}
             >
                 {/* Logo Image */}
@@ -48,7 +48,7 @@ const Navbar = () => {
             </motion.div>
 
             {/* --- CENTER COLUMN: Navigation Capsule --- */}
-            <div className="hidden md:flex justify-center">
+            <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex justify-center pointer-events-auto">
                 <motion.header
                     initial={{ y: -50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -61,7 +61,6 @@ const Navbar = () => {
                         borderRadius: '8px',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
                         boxShadow: '0 4px 30px rgba(0, 0, 0, 0.2)',
-                        pointerEvents: 'auto'
                     }}>
                     <nav className="flex gap-4 lg:gap-[1.8rem] items-center">
                         {navLinks.map((link) => {
@@ -105,7 +104,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.5 }}
-                className="hidden md:block text-[1rem] font-normal text-[#b0bebe] pointer-events-none justify-self-end whitespace-nowrap tracking-wider"
+                className="hidden md:block text-[1rem] font-normal text-[#b0bebe] pointer-events-none whitespace-nowrap tracking-wider"
             >
                 Innovations. Redefined
             </motion.div>

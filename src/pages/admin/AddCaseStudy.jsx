@@ -42,6 +42,7 @@ const AddCaseStudy = () => {
 
         try {
             if (!supabase) {
+                console.error("Supabase client is null. Check environment variables.");
                 throw new Error("Supabase client is not initialized. Please check your .env configuration.");
             }
 
