@@ -37,8 +37,8 @@ const Navbar = () => {
 
                 {/* --- LEFT COLUMN: Logo + Company Name --- */}
                 <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: -10, scale: 1 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
                     className="flex items-center gap-2 md:gap-4 pointer-events-auto cursor-pointer"
                     onClick={() => navigate('/')}
                     style={{ zIndex: 1002 }} // Ensure logo stays above mobile menu

@@ -148,7 +148,7 @@ const Careers = () => {
                     <motion.h1
                         layoutId="hero-title"
                         style={{
-                            fontSize: 'clamp(2rem, 5vw, 4rem)',
+                            fontSize: isMobile ? '2.8rem' : 'clamp(2rem, 5vw, 4rem)',
                             fontWeight: 600,
                             background: 'linear-gradient(90deg, #4f9cf9 0%, #a855f7 100%)',
                             WebkitBackgroundClip: 'text',
@@ -165,13 +165,13 @@ const Careers = () => {
                 <div key="careers-content">
                     {/* Slide 1: Join a team */}
                     <section id="hero-section" style={{
-                        height: '65vh',
+                        height: isMobile ? '45vh' : '65vh',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
                         textAlign: 'center',
-                        padding: isMobile ? '12rem 1rem 0' : '8rem 1rem 0', // Significant gap from header
+                        padding: isMobile ? '7rem 1rem 0' : '8rem 1rem 0',
                         position: 'relative'
                     }}>
                         <motion.h1
@@ -223,7 +223,7 @@ const Careers = () => {
 
                     {/* Slide 2: "Role" */}
                     <section id="role-section" style={{
-                        height: '30vh',
+                        height: isMobile ? '20vh' : '30vh',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'center',
@@ -273,10 +273,10 @@ const Careers = () => {
 
                     {/* Slide 3: Jobs Grid */}
                     <section id="jobs-section" style={{
-                        minHeight: isMobile ? 'auto' : 'auto',
-                        padding: isMobile ? '2rem 1rem' : '2rem 1rem'
+                        minHeight: 'auto',
+                        padding: isMobile ? '1rem 1rem' : '2rem 1rem'
                     }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: '3rem', gap: '1.5rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', marginBottom: isMobile ? '1.5rem' : '3.rem', gap: isMobile ? '0.8rem' : '1.5rem' }}>
                             <h3 style={{ fontSize: '2.5rem', fontWeight: 600, margin: 0 }}>
                                 Find Your <span style={{ color: '#00c2ff' }}>Perfect Role</span>
                             </h3>
