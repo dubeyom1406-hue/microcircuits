@@ -33,6 +33,20 @@ const ApplicationsList = () => {
 
     return (
         <div style={{ color: '#fff' }}>
+            <style>
+                {`
+                @media (max-width: 768px) {
+                    .application-item {
+                        grid-template-columns: 1fr !important;
+                        gap: 1rem !important;
+                    }
+                    .application-item > div {
+                        width: 100%;
+                        justify-content: flex-start !important;
+                    }
+                }
+                `}
+            </style>
             <div style={{ marginBottom: '2.5rem' }}>
                 <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '0.5rem' }}>
                     Job <span style={{ color: '#00c2ff' }}>Applications</span>
@@ -88,6 +102,7 @@ const ApplicationsList = () => {
                             key={app.id || app._id}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
+                            className="application-item"
                             style={{
                                 background: 'rgba(255, 255, 255, 0.02)',
                                 border: '1px solid rgba(255, 255, 255, 0.05)',

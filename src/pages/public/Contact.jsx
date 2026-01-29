@@ -104,6 +104,7 @@ const Contact = () => {
             <motion.form
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ borderColor: '#fff', boxShadow: '0 25px 50px rgba(255,255,255,0.1)' }}
                 transition={{ delay: 0.2, duration: 0.6 }}
                 onSubmit={handleSubmit}
                 style={{
@@ -117,7 +118,8 @@ const Contact = () => {
                     flexDirection: 'column',
                     gap: '1.5rem',
                     boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    transition: 'border-color 0.3s ease'
                 }}
             >
                 <SuccessModal
@@ -260,7 +262,7 @@ const Contact = () => {
                                     onMouseEnter={(e) => e.target.style.background = '#0052cc'}
                                     onMouseLeave={(e) => e.target.style.background = '#0066ff'}
                                 >
-                                    Direction
+                                    Directions
                                 </button>
                             </motion.div>
                         )}
@@ -300,7 +302,7 @@ const Contact = () => {
                                 boxShadow: '0 4px 15px rgba(00, 118, 254, 0.3)'
                             }}
                         >
-                            Send Message
+                            submit
                         </button>
                     </div>
                 </div>

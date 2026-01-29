@@ -344,6 +344,7 @@ const CaseStudy = () => {
                                                 key={study.id || study.title}
                                                 initial={{ opacity: 0, y: 50 }}
                                                 whileInView={{ opacity: 1, y: 0 }}
+                                                whileHover={{ borderColor: '#ffffff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
                                                 transition={{ duration: 0.6, ease: "easeOut" }}
                                                 viewport={{ once: false, amount: 0.2 }}
                                                 style={{

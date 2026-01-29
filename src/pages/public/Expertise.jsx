@@ -66,7 +66,7 @@ const Expertise = ({ onNavigate }) => {
         {
             id: 'pd',
             title: 'Physical\nDesign\n& Signoff',
-            desc: 'Fearless',
+            desc: 'fabriate',
             icon: <Cpu size={30} strokeWidth={1.5} />,
         },
         {
@@ -134,11 +134,14 @@ const Expertise = ({ onNavigate }) => {
                         flex-direction: column;
                         align-items: flex-start;
                         text-align: left;
-                        transition: transform 0.3s ease;
+                        transition: all 0.3s ease;
                         cursor: pointer;
+                        border: 1px solid transparent;
                     }
                     .service-card:hover {
                         transform: translateY(-10px);
+                        border: 2px solid #fff;
+                        box-shadow: 0 15px 40px rgba(255,255,255,0.1);
                     }
                     .service-card .icon {
                         margin-bottom: 18px;
@@ -340,6 +343,7 @@ const Expertise = ({ onNavigate }) => {
                                     <motion.div
                                         initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 }}
                                         animate={{ opacity: 1, x: 0, y: 0 }}
+                                        whileHover={{ borderColor: '#fff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
                                         style={{
                                             flex: 1,
@@ -432,6 +436,7 @@ const Expertise = ({ onNavigate }) => {
                                     <motion.div
                                         initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 }}
                                         animate={{ opacity: 1, x: 0, y: 0 }}
+                                        whileHover={{ borderColor: '#fff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
                                         style={{
                                             flex: 1,
@@ -524,6 +529,7 @@ const Expertise = ({ onNavigate }) => {
                                     <motion.div
                                         initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 }}
                                         animate={{ opacity: 1, x: 0, y: 0 }}
+                                        whileHover={{ borderColor: '#fff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
                                         style={{
                                             flex: 1,
@@ -614,6 +620,7 @@ const Expertise = ({ onNavigate }) => {
                                     <motion.div
                                         initial={{ opacity: 0, x: isMobile ? 0 : 50, y: isMobile ? 20 : 0 }}
                                         animate={{ opacity: 1, x: 0, y: 0 }}
+                                        whileHover={{ borderColor: '#fff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
                                         transition={{ duration: 0.5, delay: 0.2 }}
                                         style={{
                                             flex: 1,
@@ -702,7 +709,8 @@ const Expertise = ({ onNavigate }) => {
                                             </p>
                                         </div>
 
-                                        <div
+                                        <motion.div
+                                            whileHover={{ borderColor: '#fff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
                                             style={{
                                                 flex: 1,
                                                 minWidth: isMobile ? '100%' : '300px',
@@ -777,16 +785,19 @@ const Expertise = ({ onNavigate }) => {
                                             </p>
                                         </div>
 
-                                        <div style={{
-                                            flex: 1,
-                                            minWidth: isMobile ? '100%' : '350px',
-                                            background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
-                                            borderRadius: isMobile ? '20px' : '30px',
-                                            padding: isMobile ? '2rem' : '3rem',
-                                            border: '1px solid rgba(255,255,255,0.1)',
-                                            position: 'relative',
-                                            boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
-                                        }}>
+                                        <motion.div
+                                            whileHover={{ borderColor: '#fff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
+                                            style={{
+                                                flex: 1,
+                                                minWidth: isMobile ? '100%' : '350px',
+                                                background: 'linear-gradient(180deg, #1f1f1f 0%, #111 100%)',
+                                                borderRadius: isMobile ? '20px' : '30px',
+                                                padding: isMobile ? '2rem' : '3rem',
+                                                border: '1px solid rgba(255,255,255,0.1)',
+                                                position: 'relative',
+                                                boxShadow: '0 20px 50px rgba(0,0,0,0.5)'
+                                            }}
+                                        >
                                             <h3 style={{ fontSize: isMobile ? '1.5rem' : '2rem', fontWeight: 600, color: '#aaa', marginBottom: '8px' }}>
                                                 Silicon Taped-
                                             </h3>
@@ -838,7 +849,7 @@ const Expertise = ({ onNavigate }) => {
                                                 <h4 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}>GDSII.</h4>
                                                 <h4 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 400, color: '#aaa', marginTop: '5px' }}>Guaranteed</h4>
                                             </div>
-                                        </div>
+                                        </motion.div>
                                     </motion.div>
                                 )}
                             </div>

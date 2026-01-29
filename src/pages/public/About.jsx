@@ -1,70 +1,77 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Brain, Car, Watch, Wifi, Server, Smartphone } from 'lucide-react';
 
-const IconBox = ({ label, path, rect, rects, circle, circle2, rect1, rect2, cx, cy, r }) => (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '48px', height: '48px', color: '#fff', opacity: 0.9 }}>
-            {path && <path d={path} />}
-            {circle && <circle cx={circle.cx} cy={circle.cy} r={circle.r} />}
-            {circle2 && <circle cx={circle2.cx} cy={circle2.cy} r={circle2.r} />}
-            {rect1 && <rect x={rect1.x} y={rect1.y} width={rect1.w} height={rect1.h} rx={rect1.rx} />}
-            {rect2 && <rect x={rect2.x} y={rect2.y} width={rect2.w} height={rect2.h} rx={rect2.rx} />}
-            {cx && <circle cx={cx} cy={cy} r={r} />}
-            {label === 'Automotive' && <circle cx="17" cy="17" r="2" />}
-            {rect && <rect x={rect.x} y={rect.y} width={rect.w} height={rect.h} rx={rect.rx} />}
-            {rects && rects.map((rc, i) => <rect key={i} x={rc.x} y={rc.y} width={rc.w} height={rc.h} rx={rc.rx} />)}
-        </svg>
-        <span style={{ fontSize: '0.8rem', color: '#666', fontWeight: 500, textTransform: 'uppercase' }}>{label}</span>
+const IconBox = ({ Icon, label }) => (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+        <Icon size={40} color="#ccc" strokeWidth={1.5} style={{ minWidth: '40px' }} />
+        <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: 500, textTransform: 'uppercase', textAlign: 'center' }}>{label}</span>
     </div>
 );
 
-const StatCard = ({ number, subtitle, desc, btnText, link, navigate }) => (
-    <div
-        style={{
-            flex: '1 1 300px',
-            maxWidth: '420px',
-            background: '#080808',
-            border: '1px solid #333',
-            borderRadius: '35px',
-            padding: '45px 30px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            textAlign: 'left'
-        }}
-    >
-        <h4 style={{ fontSize: '4.5rem', marginBottom: '10px', fontWeight: 800, color: '#00c2ff', lineHeight: 1 }}>{number}</h4>
-        <h5 style={{ fontSize: '1.8rem', marginBottom: '25px', color: '#fff', fontWeight: 700 }}>{subtitle}</h5>
-        <p style={{ fontSize: '1rem', color: '#ccc', lineHeight: 1.6, marginBottom: 'auto' }}>{desc}</p>
-        <button
-            onClick={() => navigate(link)}
+const StatCard = ({ number, subtitle, desc, btnText, link, navigate }) => {
+    const [isHovered, setIsHovered] = useState(false);
+    return (
+        <div
             style={{
-                marginTop: '40px',
-                background: '#0056b3',
-                color: '#fff',
-                padding: '12px 30px',
-                borderRadius: '25px',
-                border: 'none',
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: '0.9rem',
-                transition: '0.3s'
+                flex: '1 1 300px',
+                maxWidth: '380px',
+                minWidth: '280px',
+                background: 'linear-gradient(145deg, #1a1a1a, #0a0a0a)',
+                border: isHovered ? '2px solid #fff' : '1px solid #333',
+                borderRadius: '20px',
+                padding: '40px 30px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                boxShadow: isHovered ? '0 15px 40px rgba(255,255,255,0.1)' : '0 10px 30px rgba(0,0,0,0.5)',
+                position: 'relative',
+                overflow: 'hidden',
+                transition: 'all 0.3s ease',
+                margin: '10px'
             }}
-            onMouseEnter={(e) => { e.target.style.background = '#007bff'; }}
-            onMouseLeave={(e) => { e.target.style.background = '#0056b3'; }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
-            {btnText}
-        </button>
-    </div>
-);
+            <h4 style={{ fontSize: 'clamp(3rem, 5vw, 4rem)', marginBottom: '10px', fontWeight: 700, color: '#fff', lineHeight: 1 }}>{number}</h4>
+            <h5 style={{ fontSize: '1.5rem', marginBottom: '20px', color: '#fff', fontWeight: 600 }}>{subtitle}</h5>
+            <p style={{ fontSize: '0.95rem', color: '#aaa', lineHeight: 1.6, marginBottom: '40px', maxWidth: '300px' }}>{desc}</p>
+
+            <button
+                onClick={() => navigate(link)}
+                style={{
+                    background: '#0056b3',
+                    color: '#fff',
+                    padding: '12px 0',
+                    width: '100%',
+                    borderRadius: '0 0 20px 20px',
+                    border: 'none',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    transition: 'background 0.3s'
+                }}
+                onMouseEnter={(e) => { e.target.style.background = '#007bff'; }}
+                onMouseLeave={(e) => { e.target.style.background = '#0056b3'; }}
+            >
+                {btnText}
+            </button>
+        </div>
+    );
+};
 
 const About = () => {
     const navigate = useNavigate();
     const [isMobile, setIsMobile] = useState(false);
+    const [specCardHover, setSpecCardHover] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        const handleResize = () => setIsMobile(window.innerWidth < 1024);
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
         handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
@@ -72,150 +79,150 @@ const About = () => {
 
     return (
         <div
-            className="about-page mobile-full-width"
+            className="about-page"
             style={{
                 background: '#000',
                 color: '#fff',
-                overflowX: 'hidden',
                 width: '100%',
-                maxWidth: '100vw',
-                boxSizing: 'border-box',
                 minHeight: '100vh',
                 position: 'relative',
-                zIndex: 10,
-                opacity: 1, // FORCE VISIBILITY
-                display: 'block' // FORCE DISPLAY
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                paddingTop: '100px',
+                paddingBottom: '50px',
+                overflowX: 'hidden'
             }}
         >
+            {/* Background/Gradient Effects - Optional subtle glow behind elements could go here */}
 
-            {/* Close Button Container */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px', paddingTop: '120px' }}>
-                <button
-                    onClick={() => navigate('/')}
-                    style={{
-                        width: '44px',
-                        height: '44px',
-                        borderRadius: '50%',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s'
-                    }}
-                >
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="white" strokeWidth="2.5" fill="none">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-
-            {/* Hero Section */}
-            <div style={{ textAlign: 'center', padding: '0 15px 40px 15px' }}>
-                <h1 style={{ fontSize: 'clamp(2.5rem, 8vw, 5.5rem)', fontWeight: 800, lineHeight: 1.1, marginBottom: '20px' }}>
-                    <span style={{ color: '#fff' }}>Commit.</span> <span style={{ color: '#00aaff' }}>Together</span>
-                </h1>
-                <p style={{ fontSize: 'clamp(1.2rem, 3vw, 2.22rem)', fontWeight: 600, color: '#fff' }}>
+            {/* Hero Text */}
+            <div style={{ textAlign: 'center', padding: '0 20px 40px 20px', maxWidth: '1200px', width: '100%' }}>
+                <h1 style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', fontWeight: 700, lineHeight: 1.2, color: '#fff' }}>
                     Building Trust at every Milestone — from <span style={{ color: '#00aaff' }}>Spec to Silicon.</span>
-                </p>
+                </h1>
             </div>
+
 
             {/* Mission Section */}
-            <div style={{ padding: '80px 20px', textAlign: 'center', maxWidth: '1000px', margin: '0 auto' }}>
-                <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)', color: '#fff', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-                    At MicroCircuits Innovations, We Began with <span style={{ color: '#00aaff' }}>One Mission:</span>
+            <div style={{
+                textAlign: 'center',
+                padding: '20px 20px 60px 20px',
+                maxWidth: '900px',
+                width: '100%'
+            }}>
+                <h2 style={{ fontSize: 'clamp(1.2rem, 4vw, 1.8rem)', color: '#fff', marginBottom: '15px', fontWeight: 500 }}>
+                    At MicroCircuits Innovations, We Began<br />with <span style={{ color: '#00aaff' }}>One Mission:</span>
                 </h2>
-                <h3 style={{ fontSize: 'clamp(1.8rem, 5vw, 3.8rem)', fontWeight: 800, marginBottom: '50px', lineHeight: 1.2, color: '#00aaff' }}>
-                    "To Transform the Future of Custom SoC Design"
+
+                <h3 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', color: '#00aaff', marginBottom: '40px', fontWeight: 700, lineHeight: 1.3 }}>
+                    “To Transform the Future of<br />Custom SoC Design”
                 </h3>
-                <div style={{ maxWidth: '850px', margin: '0 auto 50px', textAlign: 'left' }}>
-                    <p style={{ fontSize: '1.1rem', color: '#ccc', marginBottom: '20px', lineHeight: 1.8 }}>
-                        From Day One, we've pursued Excellence — not just in execution, but in relationships. Today, we're a Trusted Partner to the world's most innovative companies.
-                    </p>
-                    <p style={{ fontSize: '1.1rem', color: '#ccc', marginBottom: '20px', lineHeight: 1.8 }}>
-                        We offer full-spectrum VLSI design services, empowering our clients to go Further, Faster — across AI, Automotive, Connectivity, Mobility, Server, and Wearable platforms.
-                    </p>
-                    <p style={{ fontSize: '1.3rem', color: '#00aaff', fontWeight: 300, fontStyle: 'italic', marginBottom: '20px', lineHeight: '1.6' }}>
-                        With Deep Domain Expertise and Proven Execution, We Don't Just Design Silicons
-                    </p>
-                </div>
-                <h4 style={{ fontSize: '2.5rem', fontWeight: 700, color: '#00aaff' }}>
-                    "We Help Shape the Future"
+
+                <p style={{ fontSize: '1rem', color: '#ccc', marginBottom: '25px', lineHeight: 1.8, maxWidth: '800px', margin: '0 auto 25px auto' }}>
+                    From Day One, we’ve pursued <span style={{ color: '#00aaff' }}>Excellence</span> — not just in execution, but in<br />
+                    relationships. Today, we’re a <span style={{ color: '#00aaff' }}>Trusted Partner</span> to the world’s most innovative<br />
+                    companies.
+                </p>
+
+                <p style={{ fontSize: '1rem', color: '#ccc', marginBottom: '40px', lineHeight: 1.8, maxWidth: '800px', margin: '0 auto 40px auto' }}>
+                    We offer full-spectrum VLSI design services, empowering our clients to go<br />
+                    <span style={{ color: '#00aaff' }}>Further, Faster</span> — across AI, Automotive, Connectivity, Mobility, Server, and<br />
+                    Wearable platforms.
+                </p>
+
+                <p style={{ fontSize: '1rem', color: '#fff', marginBottom: '50px', lineHeight: 1.6 }}>
+                    With Deep Domain Expertise and <span style={{ color: '#00aaff' }}>Proven</span> Execution, We Don’t Just Design Silicon.
+                </p>
+
+                <h4 style={{ fontSize: '1.8rem', color: '#00aaff', fontWeight: 700 }}>
+                    “We Help Shape the Future”
                 </h4>
             </div>
 
-            {/* Spec To Silicon Card */}
-            <div style={{
-                background: '#080808',
-                border: '3px solid #333',
-                borderRadius: '35px',
-                padding: '45px 30px',
-                textAlign: 'center',
-                width: '90%',
-                maxWidth: '650px',
-                boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
-                margin: '0 auto 80px auto'
-            }}>
-                <h3 style={{ fontSize: '2.2rem', marginBottom: '40px', fontWeight: 700 }}>Spec. To <span style={{ color: '#00aaff' }}>Silicon.</span></h3>
+            {/* Spec To Silicon Center Card */}
+            <div
+                style={{
+                    background: 'linear-gradient(145deg, #111, #050505)',
+                    border: specCardHover ? '2px solid #fff' : '1px solid #333',
+                    borderRadius: '30px',
+                    padding: isMobile ? '30px 20px' : '40px 50px',
+                    textAlign: 'center',
+                    width: '90%',
+                    maxWidth: '600px',
+                    boxShadow: specCardHover ? '0 25px 60px rgba(255,255,255,0.1)' : '0 20px 50px rgba(0,0,0,0.6)',
+                    marginBottom: '100px',
+                    position: 'relative',
+                    transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={() => setSpecCardHover(true)}
+                onMouseLeave={() => setSpecCardHover(false)}
+            >
+                <h3 style={{ fontSize: '2rem', marginBottom: '40px', fontWeight: 700, color: '#fff' }}>
+                    Spec. To <span style={{ color: '#aaa' }}>Silicon.</span>
+                </h3>
 
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-                    gap: isMobile ? '20px' : '30px',
-                    margin: '40px 0',
-                    justifyItems: 'center'
+                    gap: isMobile ? '20px' : '40px',
+                    margin: '0 auto 50px auto',
+                    justifyItems: 'center',
+                    maxWidth: '400px'
                 }}>
-                    <IconBox label="AI" path="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" circle={{ cx: 12, cy: 12, r: 2 }} />
-                    <IconBox label="Automobiles" path="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9H5c-1.1 0-2 .9-2 2v7c0 .6.4 1 1 1h2" circle={{ cx: 7, cy: 17, r: 2 }} circle2={{ cx: 17, cy: 17, r: 2 }} />
-                    <IconBox label="Wearables" path="M6 4h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" />
-                    <IconBox label="Wireless" path="M5 12.55a11 11 0 0 1 14.08 0 M1.42 9a16 16 0 0 1 21.16 0" circle={{ cx: 12, cy: 20, r: 2 }} />
-                    <IconBox label="Servers" rect1={{ x: 2, y: 2, w: 20, h: 8, rx: 2 }} rect2={{ x: 2, y: 14, w: 20, h: 8, rx: 2 }} />
-                    <IconBox label="Smart Devices" path="M5 2h14a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm7 16h.01" />
+                    <IconBox Icon={Brain} label="AI" />
+                    <IconBox Icon={Car} label="Automobiles" />
+                    <IconBox Icon={Watch} label="Wearables" />
+                    <IconBox Icon={Wifi} label="Wireless" />
+                    <IconBox Icon={Server} label="Servers" />
+                    <IconBox Icon={Smartphone} label="Smart Devices" />
                 </div>
 
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/expertise')}
                     style={{
                         background: '#0056b3',
                         color: '#fff',
-                        padding: '16px 45px',
-                        borderRadius: '14px',
-                        fontWeight: 700,
+                        padding: '14px 0',
+                        width: '100%',
+                        borderRadius: '0 0 30px 30px',
                         border: 'none',
+                        fontWeight: 600,
                         cursor: 'pointer',
                         fontSize: '1rem',
-                        transition: '0.3s'
+                        transition: '0.3s',
+                        position: 'absolute',
+                        bottom: 0,
+                        left: 0
                     }}
-                    onMouseEnter={(e) => { e.target.style.background = '#007bff'; e.target.style.transform = 'translateY(-2px)'; }}
-                    onMouseLeave={(e) => { e.target.style.background = '#0056b3'; e.target.style.transform = 'translateY(0)'; }}
+                    onMouseEnter={(e) => { e.target.style.background = '#007bff'; }}
+                    onMouseLeave={(e) => { e.target.style.background = '#0056b3'; }}
                 >
                     View Our Expertise
                 </button>
             </div>
 
-            {/* Stats Grid */}
+            {/* Bottom Stats Cards */}
             <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
                 justifyContent: 'center',
-                gap: '35px',
+                gap: '30px',
                 width: '100%',
-                maxWidth: '1350px',
-                margin: '0 auto 100px auto',
-                padding: '0 20px'
+                maxWidth: '1200px',
+                padding: '0 20px 100px 20px',
+                margin: '0 auto'
             }}>
                 <StatCard
-                    number="100+"
+                    number="20+"
                     subtitle="Years Experience"
                     desc="Decades of Experience in Analog, Mixed-Signal, and Digital Design — Scaling from 180nm to 1.8nm."
-                    btnText="View CaseStudy"
+                    btnText="View Our CaseStudy"
                     link="/casestudy"
                     navigate={navigate}
                 />
                 <StatCard
-                    number="25+"
+                    number="100+"
                     subtitle="Customers"
                     desc="Trusted by Global OEMs and Tier-1s — Delivering Precision Silicon at Massive Scale, Year after Year."
                     btnText="Connect With Us"
@@ -223,10 +230,10 @@ const About = () => {
                     navigate={navigate}
                 />
                 <StatCard
-                    number="40+"
+                    number="50+"
                     subtitle="First Pass Silicon"
                     desc="Custom Silicon Solutions Deployed Across AMS, Signal Processing, and Power Management."
-                    btnText="View CaseStudy"
+                    btnText="View Our CaseStudy"
                     link="/casestudy"
                     navigate={navigate}
                 />

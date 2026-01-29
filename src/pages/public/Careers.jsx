@@ -370,7 +370,7 @@ const Careers = () => {
                                     {jobs.map((job, index) => (
                                         <motion.div
                                             key={job.id || job.title}
-                                            whileHover={{ scale: 1.02 }}
+                                            whileHover={{ scale: 1.02, borderColor: '#ffffff', borderWidth: '2px', boxShadow: '0 15px 40px rgba(255,255,255,0.1)' }}
                                             whileTap={{ scale: 0.98 }}
                                             className="career-card"
                                             style={{
